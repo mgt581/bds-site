@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | Bryant Digital Solutions</title>
+    <meta
+      name="description"
+      content="Learn about Bryant Digital Solutions and how our web development approach helps businesses grow with trust-first, conversion-focused digital experiences."
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header" role="banner" aria-label="Main site header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Bryant Digital Solutions home">
+          <img src="assets/logo-bds.jpg" alt="Bryant Digital Solutions logo" width="168" height="56" />
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="primary-nav" class="site-nav" aria-label="Primary">
+          <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="aboutus.html" aria-current="page">About Us</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li class="has-dropdown">
+              <button class="dropdown-toggle" type="button" aria-expanded="false">Our Services</button>
+              <ul class="dropdown-menu" aria-label="Services menu">
+                <li><a href="coding.html">Coding</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="container page-card">
+        <h1>About Bryant Digital Solutions</h1>
+        <p>
+          Bryant Digital Solutions helps businesses move from basic online presence to high-trust,
+          high-conversion digital growth. We combine clear messaging, strong design hierarchy, and
+          clean code to create websites that support both user confidence and long-term SEO health.
+        </p>
+        <h2>Our Mission</h2>
+        <p>
+          To deliver practical, measurable digital solutions that generate consistent enquiries and
+          lasting customer relationships.
+        </p>
+        <h2>How We Work</h2>
+        <p>
+          We focus on strategy first, then build pages that are fast, mobile-friendly, and clear in
+          intent. Every decision supports lead generation, trust signals, and organic visibility.
+        </p>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2026 Bryant Digital Solutions. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      const navToggle = document.querySelector('.nav-toggle');
+      const siteNav = document.querySelector('.site-nav');
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownParent = document.querySelector('.has-dropdown');
+
+      navToggle?.addEventListener('click', () => {
+        const isOpen = siteNav.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      dropdownToggle?.addEventListener('click', () => {
+        const expanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+        dropdownToggle.setAttribute('aria-expanded', String(!expanded));
+        dropdownParent?.classList.toggle('open');
+      });
+    </script>
+  </body>
+</html>

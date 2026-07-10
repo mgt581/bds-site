@@ -3,22 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bryant Digital Solutions</title>
+    <title>Bryant Digital Solutions | Website Design and Growth Services</title>
+    <meta
+      name="description"
+      content="Bryant Digital Solutions builds high-performing websites and digital systems that help local businesses generate leads, earn trust, and grow organically."
+    />
+    <meta
+      name="keywords"
+      content="web design, local business websites, lead generation, SEO website design, Bryant Digital Solutions"
+    />
+    <meta name="author" content="Bryant Digital Solutions" />
+    <meta property="og:title" content="Bryant Digital Solutions" />
+    <meta
+      property="og:description"
+      content="Trusted web and growth solutions built to convert visitors into customers."
+    />
+    <meta property="og:type" content="website" />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <header class="hero" role="banner" aria-label="Bryant Digital Solutions hero section">
-      <div class="hero-overlay" aria-hidden="true"></div>
-      <div class="hero-content">
-        <h1>Turn Clicks Into Customers</h1>
-        <p>
-          We build fast, conversion-focused websites and digital systems that help local businesses
-          grow with confidence.
-        </p>
-        <a class="hero-cta" href="#contact" aria-label="Get a free consultation now">
-          Get a Free Consultation Now
+    <header class="site-header" role="banner" aria-label="Main site header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Bryant Digital Solutions home">
+          <img src="assets/logo-bds.jpg" alt="Bryant Digital Solutions logo" width="168" height="56" />
         </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="primary-nav" class="site-nav" aria-label="Primary">
+          <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li class="has-dropdown">
+              <button class="dropdown-toggle" type="button" aria-expanded="false">Our Services</button>
+              <ul class="dropdown-menu" aria-label="Services menu">
+                <li><a href="coding.html">Coding</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
       </div>
     </header>
+
+    <main>
+      <section class="hero" aria-label="Bryant Digital Solutions hero image">
+        <div class="hero-overlay" aria-hidden="true"></div>
+      </section>
+
+      <section class="intro" aria-labelledby="main-heading">
+        <div class="container intro-content">
+          <h1 id="main-heading">Turn Clicks Into Customers</h1>
+          <p>
+            We build fast, conversion-focused websites and digital systems that help local businesses
+            grow with confidence.
+          </p>
+          <a class="hero-cta" href="contactus.html" aria-label="Get a free consultation now">
+            Get a Free Consultation Now
+          </a>
+        </div>
+      </section>
+
+      <section class="trust" aria-labelledby="trust-heading">
+        <div class="container">
+          <h2 id="trust-heading">Why Businesses Choose Bryant Digital Solutions</h2>
+          <div class="trust-grid">
+            <article>
+              <h3>Built for Conversions</h3>
+              <p>
+                Every page is designed to guide visitors toward real action, including calls, forms,
+                and qualified enquiries.
+              </p>
+            </article>
+            <article>
+              <h3>SEO-Ready Foundation</h3>
+              <p>
+                Clean semantic structure, mobile-first performance, and content hierarchy help search
+                engines understand your business.
+              </p>
+            </article>
+            <article>
+              <h3>Trust-First Design</h3>
+              <p>
+                Professional visuals and clear messaging increase confidence quickly so customers are
+                more likely to choose you.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2026 Bryant Digital Solutions. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      const navToggle = document.querySelector('.nav-toggle');
+      const siteNav = document.querySelector('.site-nav');
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownParent = document.querySelector('.has-dropdown');
+
+      navToggle?.addEventListener('click', () => {
+        const isOpen = siteNav.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      dropdownToggle?.addEventListener('click', () => {
+        const expanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+        dropdownToggle.setAttribute('aria-expanded', String(!expanded));
+        dropdownParent?.classList.toggle('open');
+      });
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Bryant Digital Solutions",
+        "url": "/",
+        "description": "Bryant Digital Solutions builds fast, conversion-focused websites and digital systems for local businesses."
+      }
+    </script>
   </body>
 </html>

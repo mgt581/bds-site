@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Services | Bryant Digital Solutions</title>
+    <meta
+      name="description"
+      content="Explore Bryant Digital Solutions coding services for custom website builds, landing pages, performance improvements, and scalable business-ready development."
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header" role="banner" aria-label="Main site header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Bryant Digital Solutions home">
+          <img src="assets/logo-bds.jpg" alt="Bryant Digital Solutions logo" width="168" height="56" />
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="primary-nav" class="site-nav" aria-label="Primary">
+          <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li class="has-dropdown open">
+              <button class="dropdown-toggle" type="button" aria-expanded="true">Our Services</button>
+              <ul class="dropdown-menu" aria-label="Services menu">
+                <li><a href="coding.html" aria-current="page">Coding</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="container page-card">
+        <h1>Coding Services</h1>
+        <p>
+          Our coding services are focused on real business outcomes: faster websites, clearer user
+          journeys, and stronger conversion paths.
+        </p>
+        <h2>What We Deliver</h2>
+        <ul>
+          <li>Custom business websites and landing pages</li>
+          <li>Performance and mobile responsiveness improvements</li>
+          <li>Lead-generation focused UX and conversion flows</li>
+          <li>Clean, maintainable front-end implementation</li>
+        </ul>
+        <p>
+          Ready to upgrade your website? <a href="contactus.html">Contact us</a> to discuss your
+          goals and timeline.
+        </p>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2026 Bryant Digital Solutions. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      const navToggle = document.querySelector('.nav-toggle');
+      const siteNav = document.querySelector('.site-nav');
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownParent = document.querySelector('.has-dropdown');
+
+      navToggle?.addEventListener('click', () => {
+        const isOpen = siteNav.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      dropdownToggle?.addEventListener('click', () => {
+        const expanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+        dropdownToggle.setAttribute('aria-expanded', String(!expanded));
+        dropdownParent?.classList.toggle('open');
+      });
+    </script>
+  </body>
+</html>
