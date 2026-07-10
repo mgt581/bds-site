@@ -55,12 +55,43 @@ body {
 
 .hero p {
   margin-top: 0.9rem;
-  margin-bottom: 0;
+  margin-bottom: 1.2rem;
   font-size: clamp(1rem, 2.2vw, 1.35rem);
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid rgba(246, 247, 248, 0.55);
+  border-radius: 999px;
+  background: rgba(15, 16, 18, 0.26);
+  color: var(--text);
+  text-decoration: none;
+  font-size: clamp(0.92rem, 1.8vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  backdrop-filter: blur(2px);
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+  background: rgba(15, 16, 18, 0.42);
+  border-color: rgba(246, 247, 248, 0.85);
+  transform: translateY(-1px);
+}
+
+.hero-cta:focus-visible {
+  outline: 2px solid rgba(246, 247, 248, 0.9);
+  outline-offset: 2px;
 }
 
 @media (max-width: 640px) {
   .hero {
     background-position: 58% center;
+  }
+
+  .hero-content {
+    max-width: 58ch;
   }
 }
