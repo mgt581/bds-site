@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Our Services | Bryant Digital Solutions</title>
+    <meta
+      name="description"
+      content="Explore all Bryant Digital Solutions services including coding, social media, ads, website services, SEO, audits, digital creations, and classes."
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header" role="banner" aria-label="Main site header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Bryant Digital Solutions home">
+          <img src="assets/logo-bds.jpg" alt="Bryant Digital Solutions logo" width="168" height="56" />
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="primary-nav" class="site-nav" aria-label="Primary">
+          <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li class="has-dropdown open">
+              <button class="dropdown-toggle" type="button" aria-expanded="true">Our Services</button>
+              <ul class="dropdown-menu" aria-label="Services menu">
+                <li><a href="allourservices.html" aria-current="page">All Our Services</a></li>
+                <li><a href="coding.html">Coding</a></li>
+                <li><a href="socialmedia.html">Social Media Services</a></li>
+                <li><a href="Ads.html">Growth Ads Campaign</a></li>
+                <li><a href="websiteservices.html">Website Services</a></li>
+                <li><a href="seo.html">SEO Services</a></li>
+                <li><a href="audit.html">Free Website &amp; SEO Audit</a></li>
+                <li><a href="creations.html">Digital Creations</a></li>
+                <li><a href="classescoarses.html">Classes &amp; Coarses</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="container page-card services-hub">
+        <h1>All Our Services</h1>
+        <p>
+          Choose the service that matches your business goals. Every offer is designed to improve
+          trust, generate better leads, and support long-term digital growth.
+        </p>
+
+        <div class="service-grid">
+          <a class="service-item" href="coding.html">
+            <h2>Coding</h2>
+            <p>Custom front-end builds and practical development support for performance and conversion.</p>
+          </a>
+          <a class="service-item" href="socialmedia.html">
+            <h2>Social Media Services</h2>
+            <p>Brand-led social media planning, content structure, and engagement growth support.</p>
+          </a>
+          <a class="service-item" href="Ads.html">
+            <h2>Growth Ads Campaign</h2>
+            <p>Paid campaign strategy and optimization focused on lead quality and return on ad spend.</p>
+          </a>
+          <a class="service-item" href="websiteservices.html">
+            <h2>Website Services</h2>
+            <p>Website design and landing page services built for clarity, speed, and trust.</p>
+          </a>
+          <a class="service-item" href="seo.html">
+            <h2>SEO Services</h2>
+            <p>Search visibility improvements through technical SEO, content intent, and local optimization.</p>
+          </a>
+          <a class="service-item" href="audit.html">
+            <h2>Free Website &amp; SEO Audit</h2>
+            <p>A practical review of your website performance, rankings, and growth opportunities.</p>
+          </a>
+          <a class="service-item" href="creations.html">
+            <h2>Digital Creations</h2>
+            <p>Creative assets and digital visuals that align your brand across channels.</p>
+          </a>
+          <a class="service-item" href="classescoarses.html">
+            <h2>Classes &amp; Coarses</h2>
+            <p>Training programs to help business owners and teams improve digital capability.</p>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2026 Bryant Digital Solutions. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      const navToggle = document.querySelector('.nav-toggle');
+      const siteNav = document.querySelector('.site-nav');
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownParent = document.querySelector('.has-dropdown');
+
+      navToggle?.addEventListener('click', () => {
+        const isOpen = siteNav.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      dropdownToggle?.addEventListener('click', () => {
+        const expanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+        dropdownToggle.setAttribute('aria-expanded', String(!expanded));
+        dropdownParent?.classList.toggle('open');
+      });
+    </script>
+  </body>
+</html>

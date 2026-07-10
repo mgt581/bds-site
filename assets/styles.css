@@ -386,6 +386,44 @@ h1 {
   margin-top: 0;
 }
 
+.services-hub p {
+  max-width: 72ch;
+}
+
+.service-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.service-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(36, 57, 74, 0.2);
+  border-radius: 0.8rem;
+  padding: 0.95rem;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.service-item h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.28rem;
+}
+
+.service-item p {
+  margin: 0;
+}
+
+.service-item:hover,
+.service-item:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 31, 43, 0.12);
+  border-color: rgba(151, 120, 71, 0.45);
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -470,6 +508,10 @@ textarea {
   }
 
   .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-grid {
     grid-template-columns: 1fr;
   }
 }
