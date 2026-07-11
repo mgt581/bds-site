@@ -697,6 +697,8 @@ h1 {
 }
 
 .ceo-content {
+  display: flex;
+  flex-direction: column;
   padding: clamp(1rem, 2.6vw, 1.7rem);
 }
 
@@ -708,6 +710,16 @@ h1 {
 
 .ceo-content p {
   margin: 0.5rem 0 0.9rem;
+}
+
+.ceo-proof-image {
+  width: 100%;
+  margin-top: auto;
+  min-height: 180px;
+  object-fit: cover;
+  border-radius: 0.8rem;
+  border: 1px solid var(--surface-border);
+  display: block;
 }
 
 .contact-highlight {
