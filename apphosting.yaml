@@ -28,11 +28,11 @@ env:
     availability:
       - RUNTIME
   - variable: NEXTAUTH_URL
-    value: https://bryantdigitalsolutions.com
+    value: https://bds-site--bdssite-5fac1.europe-west4.hosted.app
     availability:
       - RUNTIME
   - variable: NEXT_PUBLIC_APP_URL
-    value: https://bryantdigitalsolutions.com
+    value: https://bds-site--bdssite-5fac1.europe-west4.hosted.app
     availability:
       - BUILD
       - RUNTIME
@@ -42,5 +42,17 @@ env:
       - RUNTIME
   - variable: ADMIN_EMAIL
     value: info@bryantdigitalsolutions.com
+    availability:
+      - RUNTIME
+  - variable: RESEND_API_KEY
+    secret: bdsResendApiKey
+    availability:
+      - RUNTIME
+  - variable: OPENAI_API_KEY
+    secret: bdsOpenAiApiKey
+    availability:
+      - RUNTIME
+  - variable: PAGESPEED_API_KEY
+    secret: bdsPagespeedApiKey
     availability:
       - RUNTIME
