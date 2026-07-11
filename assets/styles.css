@@ -808,6 +808,14 @@ h1 {
   display: block;
 }
 
+.group-links-media img {
+  height: 100%;
+  min-height: 320px;
+  aspect-ratio: auto;
+  object-fit: cover;
+  background: none;
+}
+
 .trust-grid h3 {
   margin: 0;
   font-size: 1.2rem;
