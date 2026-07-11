@@ -811,7 +811,7 @@ h1 {
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./hero-bds.PNG");
   background-size: cover;
-  background-position: center;
+  background-position: center 24%;
 }
 
 .page-card h1 {
@@ -998,97 +998,46 @@ textarea {
     gap: 0.25rem;
   }
 
-  .has-dropdown .dropdown-menu {
-    position: static;
-    min-width: 100%;
-    margin-top: 0.3rem;
-    transform: none;
-    display: none;
-    opacity: 1;
-    visibility: visible;
+  .nav-list a,
+  .dropdown-toggle {
+    width: 100%;
+    text-align: left;
   }
 
-  .has-dropdown.open .dropdown-menu {
-    display: block;
+  .dropdown-menu {
+    position: static;
+    min-width: 100%;
+    margin-top: 0.35rem;
+    transform: none;
+    box-shadow: none;
   }
 
   .nav-toggle {
-    display: block;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
-  .trust-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .audit-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .website-design-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .social-media-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .seo-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ads-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .group-links-grid {
-    grid-template-columns: 1fr;
-  }
-
+  .audit-grid,
+  .services-grid,
+  .website-design-grid,
+  .social-media-grid,
+  .seo-grid,
+  .ads-grid,
+  .group-links-grid,
+  .trust-grid,
+  .service-grid,
   .form-grid {
     grid-template-columns: 1fr;
   }
 
-  .service-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .page-card::before {
-    height: clamp(150px, 38vw, 200px);
-  }
-
-  .slideshow-track {
-    animation-duration: 24s;
-  }
-}
-
-@media (max-width: 640px) {
-  .hero {
-    background-position: 56% center;
-    min-height: clamp(300px, 46vh, 460px);
-  }
-
-  .site-header {
-    backdrop-filter: blur(4px);
-  }
-
   .quick-actions {
-    right: 0.45rem;
-    bottom: 0.5rem;
-  }
-
-  .quick-btn {
-    min-width: 90px;
-    font-size: 0.75rem;
-    padding: 0.4rem 0.56rem;
+    right: 0.6rem;
+    bottom: 0.6rem;
   }
 
   .ai-chat-popup {
-    right: 0.45rem;
-    bottom: 10.6rem;
-    width: min(300px, calc(100vw - 0.9rem));
+    right: 0.6rem;
+    bottom: 12rem;
   }
 }
