@@ -32,12 +32,26 @@
         <nav id="primary-nav" class="site-nav" aria-label="Primary">
           <ul class="nav-list">
             <li><a href="index.html">Home</a></li>
-            <li><a href="aboutus.html">About Us</a></li>
+            <li class="has-dropdown">
+              <button class="dropdown-toggle" type="button" aria-expanded="false">
+                About Us <span class="nav-caret" aria-hidden="true">▼</span>
+              </button>
+              <ul class="dropdown-menu" aria-label="About us menu">
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+              </ul>
+            </li>
             <li><a href="contactus.html">Contact Us</a></li>
-            <li><a href="privacy.html" aria-current="page">Privacy Policy</a></li>
             <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="tryapps.html">Try Our Apps</a></li>
-            <li><a href="trygames.html">Try Our Games</a></li>
+            <li class="has-dropdown">
+              <button class="dropdown-toggle" type="button" aria-expanded="false">
+                Try Now <span class="nav-caret" aria-hidden="true">▼</span>
+              </button>
+              <ul class="dropdown-menu" aria-label="Try now menu">
+                <li><a href="tryapps.html">Try Our Apps</a></li>
+                <li><a href="trygames.html">Try Our Games</a></li>
+              </ul>
+            </li>
             <li class="has-dropdown">
               <button class="dropdown-toggle" type="button" aria-expanded="false">Our Services</button>
               <ul class="dropdown-menu" aria-label="Services menu">
