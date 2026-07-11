@@ -1,0 +1,7 @@
+# SEO audit Next.js app — build artifacts and dependencies
+seo-audit/node_modules/
+seo-audit/.next/
+seo-audit/out/
+seo-audit/next-env.d.ts
+seo-audit/*.tsbuildinfo
+seo-audit/data/audits/*.json
