@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
         phone: String(formData.get("phone") || "").trim(),
       };
 
+      const fallbackQuery = new URLSearchParams(payload).toString();
+
       if (status) {
         status.classList.remove("is-error");
         status.textContent = "Running your audit. This usually takes 20-40 seconds...";
@@ -76,6 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         window.location.href = `${backendOrigin}/audit/${data.reportId}`;
       } catch (error) {
+        // If cross-origin requests are blocked, continue on the hosted app with prefilled values.
+        if (backendOrigin && (error instanceof TypeError || String(error?.message || "").includes("Failed to fetch"))) {
+          window.location.href = `${backendOrigin}/free-audit?${fallbackQuery}`;
+          return;
+        }
+
         if (status) {
           status.classList.add("is-error");
           status.textContent = error.message || "Something went wrong. Please try again.";
