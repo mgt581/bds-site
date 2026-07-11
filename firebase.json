@@ -1,0 +1,19 @@
+{
+  "apphosting": [
+    {
+      "backendId": "bds-site",
+      "rootDir": ".",
+      "ignore": [
+        "node_modules",
+        ".git",
+        ".next",
+        ".env",
+        ".env.*",
+        ".neon",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "public/legacy/Ads.html"
+      ]
+    }
+  ]
+}
