@@ -142,23 +142,23 @@ Visit `/admin/login` and sign in with `ADMIN_PASSWORD`. From `/admin` you can:
   correctly.
 - The legacy static site continues to work unmodified from `public/legacy/`.
 
-## Split Hosting (GitHub Pages Frontend + Firebase Backend)
+## Split Hosting (GitHub Frontend + Firebase Backend)
 
-This repository is now set up for split hosting:
+This repository uses one canonical frontend entrypoint:
 
-- Frontend marketing site: GitHub Pages (published from `docs/`)
+- Frontend homepage: `index.html` at repo root (GitHub Pages)
 - Backend/API + reports: Firebase App Hosting
 
 How it works:
 
-- `docs/` contains a copy of the static legacy frontend from `public/legacy/`.
-- GitHub Pages can serve `docs/` directly from the `main` branch.
-- Legacy frontend audit form requests are sent to
+- GitHub Pages serves the static frontend from the root `index.html` and root assets.
+- Frontend audit form requests are sent to
   `https://bds-site--bdssite-5fac1.europe-west4.hosted.app/api/audit`.
 - Audit result redirects go to
   `https://bds-site--bdssite-5fac1.europe-west4.hosted.app/audit/:id`.
+- Firebase app root (`src/app/page.tsx`) redirects to the GitHub frontend URL.
 
 Required GitHub setting:
 
 - Repository Settings -> Pages -> Build and deployment: Deploy from a branch.
-- Branch: `main`, Folder: `/docs`.
+- Branch: `main`, Folder: `/(root)`.
