@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        const p = window.location.pathname;
+        if (p.endsWith('/bds-site') || p.endsWith('/docs')) {
+          window.location.replace(`${p}/${window.location.search}${window.location.hash}`);
+        }
+      })();
+    </script>
     <title>Bryant Digital Solutions | Website Design and Growth Services</title>
     <meta
       name="description"
