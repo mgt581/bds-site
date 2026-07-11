@@ -31,11 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       prefetched.add(normalizedHref);
-      const preload = document.createElement("link");
-      preload.rel = "prefetch";
-      preload.href = normalizedHref;
-      preload.as = "document";
-      document.head.appendChild(preload);
+      const prefetchLink = document.createElement("link");
+      prefetchLink.rel = "prefetch";
+      prefetchLink.href = normalizedHref;
+      prefetchLink.as = "document";
+      document.head.appendChild(prefetchLink);
     };
 
     document.querySelectorAll('a[href]').forEach((link) => {
@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link.addEventListener("touchstart", () => prefetchHref(href), { passive: true });
     });
 
+    // We intentionally use a one-shot fallback because this prefetch task is never cancelled.
     const schedule = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 100));
     schedule(() => {
       const links = document.querySelectorAll('a[href$=".html"], a[href="/"]');
