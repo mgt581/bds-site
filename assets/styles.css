@@ -33,7 +33,7 @@ body {
   background:
     radial-gradient(1100px 620px at -10% -20%, rgba(36, 108, 208, 0.25) 0%, transparent 58%),
     radial-gradient(960px 560px at 120% -10%, rgba(26, 78, 160, 0.33) 0%, transparent 62%),
-    linear-gradient(180deg, #02070f 0%, #071222 34%, #09182d 68%, #0a1d36 100%);
+    linear-gradient(180deg, #02070f 0%, #071222 34%, #09182d 56%, #d8d2c6 56%, #d8d2c6 100%);
   line-height: 1.55;
 }
 
@@ -52,7 +52,7 @@ body {
 }
 
 .nav-wrap {
-  min-height: clamp(76px, 6.2vw, 102px);
+  min-height: clamp(72px, 5.6vw, 90px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -185,8 +185,8 @@ body {
 
 .hero {
   position: relative;
-  min-height: clamp(220px, 32svh, 360px);
-  max-height: 420px;
+  min-height: clamp(340px, 52svh, 520px);
+  max-height: 560px;
   aspect-ratio: 16 / 9;
   width: 100%;
   background-image: url("./hero-bds.PNG");
@@ -200,20 +200,26 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, var(--overlay) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0%, transparent 35%, rgba(0, 0, 0, 0.2) 100%);
+    linear-gradient(180deg, rgba(5, 14, 24, 0.1) 0%, rgba(5, 14, 24, 0.22) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0%, transparent 35%, rgba(0, 0, 0, 0.14) 100%);
 }
 
 .intro {
-  padding: clamp(2.2rem, 5vw, 4.2rem) 0 1.1rem;
+  padding: clamp(2rem, 4vw, 3.2rem) 0 1.1rem;
+  background: #d8d2c6;
 }
 
 .intro-content {
-  background: var(--surface);
-  border: 1px solid var(--surface-border);
+  background: #eef1f6;
+  border: 1px solid rgba(42, 70, 104, 0.16);
   border-radius: 1.2rem;
   padding: clamp(1.1rem, 3vw, 2.4rem);
-  box-shadow: var(--surface-shadow);
+  box-shadow: 0 18px 40px rgba(12, 24, 40, 0.2);
+}
+
+.intro-content h1,
+.intro-content p {
+  color: #24394a;
 }
 
 h1,
