@@ -100,9 +100,28 @@
       </div>
     </main>
 
+    <div class="quick-actions" aria-label="Quick contact actions">
+      <a class="quick-btn quick-whatsapp" href="https://wa.me/447843969254" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">WhatsApp</a>
+      <a class="quick-btn quick-email" href="mailto:info@bryantdigitalsolutions.com" aria-label="Email Bryant Digital Solutions">Email Us</a>
+      <a class="quick-btn quick-call" href="tel:+447843969254" aria-label="Call Bryant Digital Solutions">Call Now</a>
+      <button class="quick-btn quick-ai" type="button" id="ai-chat-toggle" aria-expanded="false" aria-controls="ai-chat-popup">AI Help</button>
+    </div>
+
+    <div class="ai-chat-popup" id="ai-chat-popup" hidden>
+      <div class="ai-chat-head">AI Assistant</div>
+      <div class="ai-chat-body" id="ai-chat-body">
+        <p>Hello. Need help choosing a service or getting started?</p>
+      </div>
+      <form class="ai-chat-form" id="ai-chat-form">
+        <input type="text" id="ai-chat-input" placeholder="Ask about services, pricing, or timelines" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
     <footer class="site-footer">
       <div class="container">
         <p>&copy; 2026 Bryant Digital Solutions. All rights reserved.</p>
+        <p class="footer-contact">Call: <a href="tel:+447843969254">07843 969254</a> | Email: <a href="mailto:info@bryantdigitalsolutions.com">info@bryantdigitalsolutions.com</a></p>
       </div>
     </footer>
 
@@ -123,5 +142,6 @@
         dropdownParent?.classList.toggle('open');
       });
     </script>
+      <script src="assets/site.js"></script>
   </body>
 </html>
