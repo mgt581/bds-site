@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const aiToggle = document.querySelector("#ai-chat-toggle");
   const aiPopup = document.querySelector("#ai-chat-popup");
+  const aiHead = document.querySelector(".ai-chat-head");
   const aiForm = document.querySelector("#ai-chat-form");
   const aiInput = document.querySelector("#ai-chat-input");
   const aiBody = document.querySelector("#ai-chat-body");
@@ -14,6 +15,21 @@ document.addEventListener("DOMContentLoaded", () => {
     aiPopup?.removeAttribute("hidden");
     aiToggle?.setAttribute("aria-expanded", "true");
   };
+
+  if (aiHead && aiPopup && !aiHead.querySelector(".ai-chat-minimize")) {
+    const minimizeBtn = document.createElement("button");
+    minimizeBtn.type = "button";
+    minimizeBtn.className = "ai-chat-minimize";
+    minimizeBtn.setAttribute("aria-label", "Minimize AI chat");
+    minimizeBtn.textContent = "Minimize";
+
+    minimizeBtn.addEventListener("click", () => {
+      aiPopup.setAttribute("hidden", "");
+      aiToggle?.setAttribute("aria-expanded", "false");
+    });
+
+    aiHead.appendChild(minimizeBtn);
+  }
 
   aiToggle?.addEventListener("click", () => {
     const isHidden = aiPopup.hasAttribute("hidden");

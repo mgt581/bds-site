@@ -863,6 +863,27 @@ h1 {
   padding: 0.65rem 0.75rem;
   font-weight: 800;
   border-bottom: 1px solid rgba(231, 220, 200, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.ai-chat-minimize {
+  border: 1px solid rgba(151, 120, 71, 0.75);
+  background: linear-gradient(90deg, #b99a5f 0%, #d2b378 100%);
+  color: #0f2238;
+  border-radius: 0.5rem;
+  font-weight: 800;
+  font-size: 0.74rem;
+  line-height: 1;
+  padding: 0.35rem 0.5rem;
+  cursor: pointer;
+}
+
+.ai-chat-minimize:hover,
+.ai-chat-minimize:focus-visible {
+  filter: brightness(1.05);
 }
 
 .ai-chat-body {
