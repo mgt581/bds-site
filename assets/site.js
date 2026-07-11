@@ -1,4 +1,68 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const enableInternalPagePrefetch = () => {
+    const MAX_IDLE_PREFETCH_COUNT = 6;
+    const prefetched = new Set();
+    const prefetchProbe = document.createElement("link");
+    const supportsPrefetch =
+      typeof prefetchProbe.relList?.supports === "function" && prefetchProbe.relList.supports("prefetch");
+
+    if (!supportsPrefetch) {
+      return;
+    }
+
+    const normalizePath = (href) => {
+      try {
+        const url = new URL(href, window.location.origin);
+        if (url.origin !== window.location.origin) return null;
+        if (url.hash && url.pathname === window.location.pathname) return null;
+        const path = url.pathname.toLowerCase();
+        if (!path.endsWith(".html") && path !== "/" && path !== "") return null;
+        return url.href;
+      } catch (_) {
+        return null;
+      }
+    };
+
+    const prefetchHref = (href) => {
+      const normalizedHref = normalizePath(href);
+      if (!normalizedHref || prefetched.has(normalizedHref)) {
+        return;
+      }
+
+      prefetched.add(normalizedHref);
+      const prefetchLink = document.createElement("link");
+      prefetchLink.rel = "prefetch";
+      prefetchLink.href = normalizedHref;
+      prefetchLink.as = "document";
+      document.head.appendChild(prefetchLink);
+    };
+
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href || href.startsWith("mailto:") || href.startsWith("tel:")) {
+        return;
+      }
+
+      link.addEventListener("mouseenter", () => prefetchHref(href), { passive: true });
+      link.addEventListener("touchstart", () => prefetchHref(href), { passive: true });
+    });
+
+    // We intentionally use a one-shot fallback because this runs once per page
+    // and only appends a few lightweight <link rel="prefetch"> tags.
+    const schedule = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 100));
+    schedule(() => {
+      const links = Array.from(document.querySelectorAll("a[href]")).filter((link) =>
+        normalizePath(link.getAttribute("href") || ""),
+      );
+      for (let i = 0; i < Math.min(links.length, MAX_IDLE_PREFETCH_COUNT); i += 1) {
+        const href = links[i].getAttribute("href");
+        if (href) prefetchHref(href);
+      }
+    });
+  };
+
+  enableInternalPagePrefetch();
+
   const FIREBASE_BACKEND_ORIGIN = "https://bds-site--bdssite-5fac1.europe-west4.hosted.app";
   const isLocalDev = ["localhost", "127.0.0.1"].includes(window.location.hostname);
   const backendOrigin = isLocalDev ? "" : FIREBASE_BACKEND_ORIGIN;
