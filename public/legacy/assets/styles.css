@@ -163,7 +163,7 @@ body {
   position: relative;
   min-height: clamp(380px, 62vh, 680px);
   width: 100%;
-  background-image: url("./bds-site.PNG");
+  background-image: url("./hero-bds.PNG");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -960,6 +960,58 @@ h1 {
   grid-column: 1 / -1;
 }
 
+.audit-tool-form {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(36, 57, 74, 0.16);
+}
+
+.audit-tool-form-wide {
+  max-width: 760px;
+}
+
+.audit-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.78rem;
+}
+
+.audit-tool-grid .full {
+  grid-column: 1 / -1;
+}
+
+.audit-tool-grid span {
+  color: rgba(36, 57, 74, 0.62);
+  font-weight: 500;
+}
+
+.audit-tool-form input {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.audit-submit {
+  margin-top: 0.9rem;
+  cursor: pointer;
+}
+
+.audit-submit[disabled] {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none;
+}
+
+.audit-tool-status {
+  min-height: 1.35rem;
+  margin: 0.65rem 0 0;
+  color: #5b4523;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.audit-tool-status.is-error {
+  color: #9d2f23;
+}
+
 label {
   display: block;
   font-weight: 600;
@@ -1033,7 +1085,8 @@ textarea {
   .group-links-grid,
   .trust-grid,
   .service-grid,
-  .form-grid {
+  .form-grid,
+  .audit-tool-grid {
     grid-template-columns: 1fr;
   }
 

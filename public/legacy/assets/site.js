@@ -33,6 +33,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 20000);
   }
 
+  document.querySelectorAll(".js-audit-form").forEach((form) => {
+    const status = form.querySelector(".audit-tool-status");
+    const submit = form.querySelector(".audit-submit");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const payload = {
+        website: String(formData.get("website") || "").trim(),
+        businessName: String(formData.get("businessName") || "").trim(),
+        name: String(formData.get("name") || "").trim(),
+        email: String(formData.get("email") || "").trim(),
+        phone: String(formData.get("phone") || "").trim(),
+      };
+
+      if (status) {
+        status.classList.remove("is-error");
+        status.textContent = "Running your audit. This usually takes 20-40 seconds...";
+      }
+      if (submit) {
+        submit.setAttribute("disabled", "");
+        submit.textContent = "Running Audit...";
+      }
+
+      try {
+        const response = await fetch("/api/audit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Something went wrong. Please try again.");
+        }
+
+        window.location.href = `/audit/${data.reportId}`;
+      } catch (error) {
+        if (status) {
+          status.classList.add("is-error");
+          status.textContent = error.message || "Something went wrong. Please try again.";
+        }
+        if (submit) {
+          submit.removeAttribute("disabled");
+          submit.textContent = "Run My Free Audit";
+        }
+      }
+    });
+  });
+
   aiForm?.addEventListener("submit", (event) => {
     event.preventDefault();
     const question = (aiInput?.value || "").trim();

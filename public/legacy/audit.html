@@ -70,13 +70,35 @@
           <li>Priority action plan for quick wins</li>
         </ul>
         <p>
-          Request your audit through our <a href="contactus.html">contact page</a>, or try our
-          <a href="/free-audit">instant online SEO audit tool</a> for a free automated report in
-          under a minute.
+          Fill in the form below and the instant audit tool will check your website, save the lead,
+          email the report and open your results page.
         </p>
-        <a class="hero-cta" href="/free-audit" aria-label="Start your free SEO audit now">
-          Start My Free SEO Audit
-        </a>
+        <form class="audit-tool-form audit-tool-form-wide js-audit-form" aria-label="Free SEO audit form">
+          <div class="audit-tool-grid">
+            <div>
+              <label for="audit-page-website">Website URL</label>
+              <input id="audit-page-website" name="website" type="text" placeholder="https://yourbusiness.com" autocomplete="url" required />
+            </div>
+            <div>
+              <label for="audit-page-business">Business Name</label>
+              <input id="audit-page-business" name="businessName" type="text" placeholder="Your business" autocomplete="organization" required />
+            </div>
+            <div>
+              <label for="audit-page-name">Your Name</label>
+              <input id="audit-page-name" name="name" type="text" placeholder="Your name" autocomplete="name" required />
+            </div>
+            <div>
+              <label for="audit-page-email">Email Address</label>
+              <input id="audit-page-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+            </div>
+            <div class="full">
+              <label for="audit-page-phone">Phone Number <span>(optional)</span></label>
+              <input id="audit-page-phone" name="phone" type="tel" placeholder="07843 969254" autocomplete="tel" />
+            </div>
+          </div>
+          <button class="hero-cta audit-submit" type="submit">Run My Free Audit</button>
+          <p class="audit-tool-status" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </main>
 

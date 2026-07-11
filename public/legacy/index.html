@@ -87,7 +87,7 @@
       <section class="audit-highlight" aria-labelledby="audit-heading">
         <div class="container audit-grid">
           <div class="audit-media">
-            <img loading="lazy" decoding="async" src="assets/freewebsiteaudit.png" alt="Website and SEO audit preview" width="640" height="420" />
+            <img loading="lazy" decoding="async" src="assets/seo.png" alt="Website and SEO audit preview" width="640" height="420" />
           </div>
           <div class="audit-content">
             <h2 id="audit-heading">Free Website &amp; SEO Audit</h2>
@@ -103,9 +103,32 @@
               <li>Growth recommendations</li>
             </ul>
             <p class="audit-note">Audit normally valued at £49 — free if you work with us.</p>
-            <a class="hero-cta" href="/free-audit" aria-label="Get my free audit">
-              Get My Free Audit
-            </a>
+            <form class="audit-tool-form js-audit-form" aria-label="Free SEO audit form">
+              <div class="audit-tool-grid">
+                <div>
+                  <label for="audit-website">Website URL</label>
+                  <input id="audit-website" name="website" type="text" placeholder="https://yourbusiness.com" autocomplete="url" required />
+                </div>
+                <div>
+                  <label for="audit-business">Business Name</label>
+                  <input id="audit-business" name="businessName" type="text" placeholder="Your business" autocomplete="organization" required />
+                </div>
+                <div>
+                  <label for="audit-name">Your Name</label>
+                  <input id="audit-name" name="name" type="text" placeholder="Your name" autocomplete="name" required />
+                </div>
+                <div>
+                  <label for="audit-email">Email Address</label>
+                  <input id="audit-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+                </div>
+                <div class="full">
+                  <label for="audit-phone">Phone Number <span>(optional)</span></label>
+                  <input id="audit-phone" name="phone" type="tel" placeholder="07843 969254" autocomplete="tel" />
+                </div>
+              </div>
+              <button class="hero-cta audit-submit" type="submit">Run My Free Audit</button>
+              <p class="audit-tool-status" role="status" aria-live="polite"></p>
+            </form>
           </div>
         </div>
       </section>
