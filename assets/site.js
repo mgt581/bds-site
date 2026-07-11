@@ -48,7 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
       link.addEventListener("touchstart", () => prefetchHref(href), { passive: true });
     });
 
-    // We intentionally use a one-shot fallback because this prefetch task is never cancelled.
+    // We intentionally use a one-shot fallback because this runs once per page
+    // and only appends a few lightweight <link rel="prefetch"> tags.
     const schedule = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 100));
     schedule(() => {
       const links = document.querySelectorAll('a[href$=".html"], a[href="/"]');
