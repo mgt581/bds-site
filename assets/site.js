@@ -48,9 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
       link.addEventListener("touchstart", () => prefetchHref(href), { passive: true });
     });
 
-    const schedule = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 250));
+    const schedule = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 100));
     schedule(() => {
-      const links = document.querySelectorAll('a[href$=".html"], a[href="/"], a[href="index.html"]');
+      const links = document.querySelectorAll('a[href$=".html"], a[href="/"]');
       for (let i = 0; i < Math.min(links.length, MAX_IDLE_PREFETCH_COUNT); i += 1) {
         const href = links[i].getAttribute("href");
         if (href) prefetchHref(href);
