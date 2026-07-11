@@ -1181,51 +1181,83 @@ h1 {
 }
 
 .coding-page-card::before {
+  height: clamp(220px, 32vw, 340px);
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./codingservices.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 46%;
 }
 
 .socialmedia-page-card::before {
+  height: clamp(220px, 32vw, 340px);
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./soicalmedia.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 46%;
 }
 
 .ads-page-card::before {
+  height: clamp(220px, 32vw, 340px);
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./adscampaign.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 46%;
 }
 
 .websiteservices-page-card::before {
+  height: clamp(220px, 32vw, 340px);
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./websiteservices.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 46%;
 }
 
 .seoservices-page-card::before {
+  height: clamp(220px, 32vw, 340px);
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./seoservices.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 46%;
 }
 
 .audit-page-card::before {
+  height: clamp(220px, 32vw, 340px);
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./audit.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 46%;
 }
 
 .creations-page-card::before {
+  height: clamp(220px, 32vw, 340px);
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./creations.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 46%;
 }
 
 .classescourses-page-card::before {
+  height: clamp(220px, 32vw, 340px);
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./hero-bds.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 46%;
 }
 
 .service-grid {
