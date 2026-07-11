@@ -4,12 +4,14 @@
   --ink: #dce8ff;
   --ink-2: #f2f6ff;
   --light: #eef5ff;
+  --section-blue: #0b2542;
+  --section-grey: #2c3848;
   --sand: #99b7de;
   --gold: #d7b06b;
   --gold-deep: #b9893f;
   --header-start: rgba(6, 15, 28, 0.96);
   --header-end: rgba(9, 24, 42, 0.96);
-  --surface: rgba(10, 24, 42, 0.86);
+  --surface: rgba(44, 56, 72, 0.9);
   --surface-border: rgba(89, 129, 184, 0.34);
   --surface-shadow: 0 18px 40px rgba(2, 8, 19, 0.45);
   --overlay: rgba(5, 15, 30, 0.5);
@@ -33,7 +35,7 @@ body {
   background:
     radial-gradient(1100px 620px at -10% -20%, rgba(36, 108, 208, 0.25) 0%, transparent 58%),
     radial-gradient(960px 560px at 120% -10%, rgba(26, 78, 160, 0.33) 0%, transparent 62%),
-    linear-gradient(180deg, #02070f 0%, #071222 34%, #09182d 56%, #d8d2c6 56%, #d8d2c6 100%);
+    linear-gradient(180deg, #02070f 0%, #071222 34%, #09182d 100%);
   line-height: 1.55;
 }
 
@@ -206,20 +208,36 @@ body {
 
 .intro {
   padding: clamp(2rem, 4vw, 3.2rem) 0 1.1rem;
-  background: #d8d2c6;
+  background: var(--section-grey);
 }
 
 .intro-content {
-  background: #eef1f6;
-  border: 1px solid rgba(42, 70, 104, 0.16);
+  background: var(--section-blue);
+  border: 1px solid var(--surface-border);
   border-radius: 1.2rem;
   padding: clamp(1.1rem, 3vw, 2.4rem);
-  box-shadow: 0 18px 40px rgba(12, 24, 40, 0.2);
+  box-shadow: var(--surface-shadow);
 }
 
 .intro-content h1,
 .intro-content p {
-  color: #24394a;
+  color: var(--ink-2);
+}
+
+.audit-highlight,
+.website-design-highlight,
+.seo-highlight,
+.group-links-highlight,
+.faq-highlight {
+  background: var(--section-blue);
+}
+
+.services-spotlight,
+.social-media-highlight,
+.ads-highlight,
+.contact-highlight,
+.trust {
+  background: var(--section-grey);
 }
 
 h1,
