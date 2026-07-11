@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const FIREBASE_BACKEND_ORIGIN = "https://bds-site--bdssite-5fac1.europe-west4.hosted.app";
+  const isLocalDev = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+  const backendOrigin = isLocalDev ? "" : FIREBASE_BACKEND_ORIGIN;
+
   const aiToggle = document.querySelector("#ai-chat-toggle");
   const aiPopup = document.querySelector("#ai-chat-popup");
   const aiForm = document.querySelector("#ai-chat-form");
@@ -59,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const response = await fetch("/api/audit", {
+        const response = await fetch(`${backendOrigin}/api/audit`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -70,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(data.error || "Something went wrong. Please try again.");
         }
 
-        window.location.href = `/audit/${data.reportId}`;
+        window.location.href = `${backendOrigin}/audit/${data.reportId}`;
       } catch (error) {
         if (status) {
           status.classList.add("is-error");

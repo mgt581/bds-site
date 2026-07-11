@@ -141,3 +141,24 @@ Visit `/admin/login` and sign in with `ADMIN_PASSWORD`. From `/admin` you can:
 - Set `NEXT_PUBLIC_APP_URL` to the deployed domain so email links resolve
   correctly.
 - The legacy static site continues to work unmodified from `public/legacy/`.
+
+## Split Hosting (GitHub Pages Frontend + Firebase Backend)
+
+This repository is now set up for split hosting:
+
+- Frontend marketing site: GitHub Pages (published from `docs/`)
+- Backend/API + reports: Firebase App Hosting
+
+How it works:
+
+- `docs/` contains a copy of the static legacy frontend from `public/legacy/`.
+- GitHub Pages can serve `docs/` directly from the `main` branch.
+- Legacy frontend audit form requests are sent to
+  `https://bds-site--bdssite-5fac1.europe-west4.hosted.app/api/audit`.
+- Audit result redirects go to
+  `https://bds-site--bdssite-5fac1.europe-west4.hosted.app/audit/:id`.
+
+Required GitHub setting:
+
+- Repository Settings -> Pages -> Build and deployment: Deploy from a branch.
+- Branch: `main`, Folder: `/docs`.
