@@ -1164,7 +1164,9 @@ h1 {
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./allourservices.webp");
-  background-position: center 36%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 46%;
 }
 
 .coding-page-card::before {
