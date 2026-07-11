@@ -1,0 +1,57 @@
+// Prisma schema for Bryant Digital Solutions SEO Audit platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  WON
+  LOST
+}
+
+model Lead {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  phone        String?
+  website      String
+  businessName String
+  status       LeadStatus @default(NEW)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  auditReports AuditReport[]
+
+  @@index([email])
+  @@index([status])
+}
+
+model AuditReport {
+  id                String   @id @default(cuid())
+  leadId            String
+  lead              Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  overallScore      Int
+  technicalScore    Int
+  onPageScore       Int
+  performanceScore  Int
+  localScore        Int
+  accessibilityScore Int
+
+  auditData         Json
+  reportUrl         String?
+  reportHtml        String?
+  pdfUrl            String?
+  aiSummary         String?
+
+  createdAt         DateTime @default(now())
+
+  @@index([leadId])
+}
