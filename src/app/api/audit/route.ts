@@ -10,10 +10,48 @@ import { prisma } from '@/lib/db'
 
 export const maxDuration = 60
 
+const ALLOWED_ORIGINS = new Set([
+  'https://mgt581.github.io',
+  'https://bds-site--bdssite-5fac1.europe-west4.hosted.app',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+])
+
+function getCorsHeaders(request: NextRequest): HeadersInit {
+  const origin = request.headers.get('origin') || ''
+  const allowOrigin = ALLOWED_ORIGINS.has(origin)
+    ? origin
+    : 'https://bds-site--bdssite-5fac1.europe-west4.hosted.app'
+
+  return {
+    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    Vary: 'Origin',
+  }
+}
+
+function jsonWithCors(request: NextRequest, body: unknown, init?: ResponseInit) {
+  return NextResponse.json(body, {
+    ...init,
+    headers: {
+      ...(init?.headers || {}),
+      ...getCorsHeaders(request),
+    },
+  })
+}
+
 function getClientIp(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for')
   if (forwarded) return forwarded.split(',')[0].trim()
   return request.headers.get('x-real-ip') || 'unknown'
+}
+
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: getCorsHeaders(request),
+  })
 }
 
 export async function POST(request: NextRequest) {
@@ -21,7 +59,8 @@ export async function POST(request: NextRequest) {
     const ip = getClientIp(request)
     const rateLimit = checkRateLimit(ip)
     if (!rateLimit.allowed) {
-      return NextResponse.json(
+      return jsonWithCors(
+        request,
         {
           error: 'Too many audit requests. Please try again later.',
           resetAt: rateLimit.resetAt,
@@ -33,7 +72,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const parsed = auditRequestSchema.safeParse(body)
     if (!parsed.success) {
-      return NextResponse.json(
+      return jsonWithCors(
+        request,
         { error: 'Invalid request', details: parsed.error.flatten().fieldErrors },
         { status: 400 }
       )
@@ -101,7 +141,7 @@ export async function POST(request: NextRequest) {
       .filter((r) => r.status === 'rejected')
       .map((r) => (r as PromiseRejectedResult).reason?.message || 'Unknown email error')
 
-    return NextResponse.json({
+    return jsonWithCors(request, {
       success: true,
       reportId: report.id,
       leadId: lead.id,
@@ -110,7 +150,8 @@ export async function POST(request: NextRequest) {
     })
   } catch (err) {
     console.error('[api/audit] Unexpected error:', err)
-    return NextResponse.json(
+    return jsonWithCors(
+      request,
       { error: 'Something went wrong while running your audit. Please try again.' },
       { status: 500 }
     )
