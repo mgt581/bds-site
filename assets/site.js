@@ -1,4 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const enableInternalPagePrefetch = () => {
+    const prefetched = new Set();
+    const supportsPrefetch = (() => {
+      const link = document.createElement("link");
+      return link.relList?.supports?.("prefetch") === true;
+    })();
+
+    if (!supportsPrefetch) {
+      return;
+    }
+
+    const normalizePath = (href) => {
+      try {
+        const url = new URL(href, window.location.origin);
+        if (url.origin !== window.location.origin) return null;
+        if (url.hash && url.pathname === window.location.pathname) return null;
+        const path = url.pathname.toLowerCase();
+        if (!path.endsWith(".html") && path !== "/" && path !== "") return null;
+        return url.href;
+      } catch (_) {
+        return null;
+      }
+    };
+
+    const prefetchHref = (href) => {
+      const normalizedHref = normalizePath(href);
+      if (!normalizedHref || prefetched.has(normalizedHref)) {
+        return;
+      }
+
+      prefetched.add(normalizedHref);
+      const preload = document.createElement("link");
+      preload.rel = "prefetch";
+      preload.href = normalizedHref;
+      preload.as = "document";
+      document.head.appendChild(preload);
+    };
+
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href || href.startsWith("mailto:") || href.startsWith("tel:")) {
+        return;
+      }
+
+      link.addEventListener("mouseenter", () => prefetchHref(href), { passive: true });
+      link.addEventListener("touchstart", () => prefetchHref(href), { passive: true });
+    });
+
+    const schedule = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 250));
+    schedule(() => {
+      const links = document.querySelectorAll('a[href$=".html"], a[href="/"], a[href="./"], a[href="index.html"]');
+      for (let i = 0; i < Math.min(links.length, 6); i += 1) {
+        const href = links[i].getAttribute("href");
+        if (href) prefetchHref(href);
+      }
+    });
+  };
+
+  enableInternalPagePrefetch();
+
   const FIREBASE_BACKEND_ORIGIN = "https://bds-site--bdssite-5fac1.europe-west4.hosted.app";
   const isLocalDev = ["localhost", "127.0.0.1"].includes(window.location.hostname);
   const backendOrigin = isLocalDev ? "" : FIREBASE_BACKEND_ORIGIN;
