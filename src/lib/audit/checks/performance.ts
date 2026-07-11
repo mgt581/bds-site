@@ -1,5 +1,3 @@
-import fetch from 'node-fetch'
-
 export interface PerformanceResult {
   source: 'pagespeed' | 'estimated'
   performanceScore: number

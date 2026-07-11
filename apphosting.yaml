@@ -1,0 +1,46 @@
+# Firebase App Hosting configuration for the Next.js audit platform.
+#
+# Secrets are set with `firebase apphosting:secrets:set` and kept out of git.
+runConfig:
+  minInstances: 0
+  maxInstances: 10
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 1024
+
+env:
+  - variable: DATABASE_URL
+    secret: bdsDatabaseUrl
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: DIRECT_URL
+    secret: bdsDirectUrl
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: ADMIN_PASSWORD
+    secret: bdsAdminPassword
+    availability:
+      - RUNTIME
+  - variable: NEXTAUTH_SECRET
+    secret: bdsNextAuthSecret
+    availability:
+      - RUNTIME
+  - variable: NEXTAUTH_URL
+    value: https://bryantdigitalsolutions.com
+    availability:
+      - RUNTIME
+  - variable: NEXT_PUBLIC_APP_URL
+    value: https://bryantdigitalsolutions.com
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: RESEND_FROM_EMAIL
+    value: noreply@bryantdigitalsolutions.com
+    availability:
+      - RUNTIME
+  - variable: ADMIN_EMAIL
+    value: info@bryantdigitalsolutions.com
+    availability:
+      - RUNTIME
