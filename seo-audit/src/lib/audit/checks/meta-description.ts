@@ -3,8 +3,9 @@
  *
  * SEO best-practice rules:
  *  - Must be present
- *  - Optimal length: 120–158 characters
- *  - Should be descriptive (not duplicated from title)
+ *  - Below 70 characters is flagged as too short; ideal range is 120–158 characters
+ *  - Above 158 characters is likely to be truncated
+ *  - Should not be duplicated from title
  */
 
 import type { AuditFinding, PageData } from '@/types/audit';

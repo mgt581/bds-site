@@ -21,10 +21,10 @@ export function calculateScore(findings: AuditFinding[]): number {
 /**
  * Returns a human-readable grade label for a numeric score.
  */
-export function scoreLabel(score: number): { label: string; colour: string } {
-  if (score >= 90) return { label: 'Excellent', colour: '#2d9249' };
-  if (score >= 75) return { label: 'Good', colour: '#5c9e31' };
-  if (score >= 60) return { label: 'Needs Work', colour: '#e07b00' };
-  if (score >= 40) return { label: 'Poor', colour: '#d14b00' };
-  return { label: 'Critical', colour: '#c0392b' };
+export function scoreLabel(score: number): { label: string; color: string } {
+  if (score >= 90) return { label: 'Excellent', color: '#2d9249' };
+  if (score >= 75) return { label: 'Good', color: '#5c9e31' };
+  if (score >= 60) return { label: 'Needs Work', color: '#e07b00' };
+  if (score >= 40) return { label: 'Poor', color: '#d14b00' };
+  return { label: 'Critical', color: '#c0392b' };
 }

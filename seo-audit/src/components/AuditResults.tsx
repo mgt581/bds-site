@@ -11,7 +11,7 @@ interface Props {
 
 export default function AuditResults({ result, onReset }: Props) {
   const { score, findings, summary, input, auditedAt } = result;
-  const { label, colour } = scoreLabel(score);
+  const { label, color } = scoreLabel(score);
   const groups = groupByPriority(findings);
   const auditDate = new Date(auditedAt).toLocaleDateString('en-GB', {
     day: 'numeric',
@@ -23,7 +23,7 @@ export default function AuditResults({ result, onReset }: Props) {
     <div className="space-y-8">
       {/* Score summary card */}
       <div className="card flex flex-col sm:flex-row items-center gap-6">
-        <ScoreCircle score={score} colour={colour} />
+        <ScoreCircle score={score} color={color} />
         <div className="flex-1 text-center sm:text-left">
           <h2 className="text-xl font-bold text-gray-900">
             SEO Audit for{' '}
@@ -33,7 +33,7 @@ export default function AuditResults({ result, onReset }: Props) {
             Audited: <span className="font-medium text-gray-700">{input.url}</span>
             {' · '}{auditDate}
           </p>
-          <p className="mt-2 text-base font-semibold" style={{ color: colour }}>
+          <p className="mt-2 text-base font-semibold" style={{ color: color }}>
             {label}
           </p>
           <div className="mt-3 flex flex-wrap justify-center sm:justify-start gap-3 text-sm">
@@ -113,7 +113,7 @@ export default function AuditResults({ result, onReset }: Props) {
 // Sub-components
 // ──────────────────────────────────────────────────────────────
 
-function ScoreCircle({ score, colour }: { score: number; colour: string }) {
+function ScoreCircle({ score, color }: { score: number; color: string }) {
   const circumference = 2 * Math.PI * 40;
   const offset = circumference - (score / 100) * circumference;
 
@@ -126,7 +126,7 @@ function ScoreCircle({ score, colour }: { score: number; colour: string }) {
           cy="50"
           r="40"
           fill="none"
-          stroke={colour}
+          stroke={color}
           strokeWidth="8"
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -136,7 +136,7 @@ function ScoreCircle({ score, colour }: { score: number; colour: string }) {
         />
       </svg>
       <div className="absolute text-center">
-        <span className="block text-2xl font-bold leading-none" style={{ color: colour }}>
+        <span className="block text-2xl font-bold leading-none" style={{ color: color }}>
           {score}
         </span>
         <span className="text-[10px] text-gray-500 font-medium">/ 100</span>

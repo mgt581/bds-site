@@ -1,6 +1,6 @@
 # Bryant Digital Solutions — SEO Audit Tool
 
-A production-ready, step-by-step SEO audit tool built with Next.js 14. This is **Step 1** of a multi-iteration build. See the [Roadmap](#roadmap) section for planned next steps.
+A **production-ready SEO audit tool** built with Next.js 15 as a subapp of the Bryant Digital Solutions repository. This is **Step 1** of a multi-iteration build. See the [Roadmap](#roadmap) section for planned next steps.
 
 ## What it does (Step 1)
 
