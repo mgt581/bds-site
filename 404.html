@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bryant Digital Solutions</title>
     <script>
-      const appUrl = "https://bds-site--bdssite-5fac1.europe-west4.hosted.app";
-      const path = window.location.pathname.replace(/^\/bds-site\/?/, "/");
-      window.location.replace(`${appUrl}${path}${window.location.search}${window.location.hash}`);
+      const path = window.location.pathname;
+      const repoBaseMatch = path.match(/^(.*\/bds-site)(?:\/.*)?$/);
+      const repoBase = repoBaseMatch ? repoBaseMatch[1] : "";
+      const relativePath = repoBase ? path.slice(repoBase.length) : path;
+      window.location.replace(`${repoBase}/docs${relativePath}${window.location.search}${window.location.hash}`);
     </script>
   </head>
   <body>
-    <p>Loading <a href="https://bds-site--bdssite-5fac1.europe-west4.hosted.app/">Bryant Digital Solutions</a>...</p>
+    <p>Loading <a href="docs/index.html">Bryant Digital Solutions</a>...</p>
   </body>
 </html>
