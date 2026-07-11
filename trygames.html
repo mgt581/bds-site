@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>All Our Services | Bryant Digital Solutions</title>
+    <title>Try Out Our Games | Bryant Digital Solutions</title>
     <meta
       name="description"
-      content="Explore all Bryant Digital Solutions services including coding, social media, ads, website services, SEO, audits, digital creations, and classes."
+      content="Try out our Fortnite and Roblox games from Bryant Digital Solutions."
     />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
@@ -37,11 +37,13 @@
             <li><a href="privacy.html">Privacy Policy</a></li>
             <li><a href="gallery.html">Gallery</a></li>
             <li><a href="tryapps.html">Try Our Apps</a></li>
-            <li><a href="trygames.html">Try Our Games</a></li>
-            <li class="has-dropdown open">
-              <button class="dropdown-toggle" type="button" aria-expanded="true">Our Services</button>
+            <li><a href="trygames.html" aria-current="page">Try Our Games</a></li>
+            <li class="has-dropdown">
+              <button class="dropdown-toggle" type="button" aria-expanded="false">
+                Our Services <span class="nav-caret" aria-hidden="true">▼</span>
+              </button>
               <ul class="dropdown-menu" aria-label="Services menu">
-                <li><a href="allourservices.html" aria-current="page">All Our Services</a></li>
+                <li><a href="allourservices.html">All Our Services</a></li>
                 <li><a href="coding.html">Coding</a></li>
                 <li><a href="socialmedia.html">Social Media Services</a></li>
                 <li><a href="ads.html">Growth Ads Campaign</a></li>
@@ -58,45 +60,38 @@
     </header>
 
     <main class="page-main">
-      <div class="container page-card services-hub">
-        <h1>All Our Services</h1>
-        <p>
-          Choose the service that matches your business goals. Every offer is designed to improve
-          trust, generate better leads, and support long-term digital growth.
-        </p>
+      <div class="container page-card tryapps-page-card">
+        <h1>Try Out Our Games</h1>
+        <p>Jump into our featured Fortnite and Roblox experiences.</p>
 
-        <div class="service-grid">
-          <a class="service-item" href="coding.html">
-            <h2>Coding</h2>
-            <p>Custom front-end builds and practical development support for performance and conversion.</p>
+        <h2 class="games-platform-heading">Fortnite</h2>
+        <div class="tryapps-grid">
+          <a class="tryapp-link" href="https://create.fortnite.com/personal/projects/541c8801-9b41-4aa4-8fb6-95d345ae208a/releases" target="_blank" rel="noopener noreferrer" aria-label="Open Rabbit Vs Duck Season project">
+            <img loading="lazy" decoding="async" src="assets/rabbitseason.png" alt="Rabbit Vs Duck Season Fortnite project" width="360" height="360" />
+            <h2>Rabbit Vs Duck Season</h2>
           </a>
-          <a class="service-item" href="socialmedia.html">
-            <h2>Social Media Services</h2>
-            <p>Brand-led social media planning, content structure, and engagement growth support.</p>
+
+          <a class="tryapp-link" href="https://play.fn.gg/island/6331-2918-3440" target="_blank" rel="noopener noreferrer" aria-label="Open Wuggy Map Fortnite island">
+            <img loading="lazy" decoding="async" src="assets/wuggymap.PNG" alt="Wuggy Map Fortnite island" width="360" height="360" />
+            <h2>Wuggy Map</h2>
           </a>
-          <a class="service-item" href="ads.html">
-            <h2>Growth Ads Campaign</h2>
-            <p>Paid campaign strategy and optimization focused on lead quality and return on ad spend.</p>
+
+          <a class="tryapp-link" href="https://play.fn.gg/island/6395-7630-2936" target="_blank" rel="noopener noreferrer" aria-label="Open Touch Football Fortnite island">
+            <img loading="lazy" decoding="async" src="assets/touchfootball.png" alt="Touch Football Fortnite island" width="360" height="360" />
+            <h2>Touch Football</h2>
           </a>
-          <a class="service-item" href="websiteservices.html">
-            <h2>Website Services</h2>
-            <p>Website design and landing page services built for clarity, speed, and trust.</p>
+        </div>
+
+        <h2 class="games-platform-heading">Roblox</h2>
+        <div class="tryapps-grid">
+          <a class="tryapp-link" href="https://www.roblox.com/share?code=3b513826fad47c42ac904478f37ba056&type=ExperienceDetails&stamp=1783735192665" target="_blank" rel="noopener noreferrer" aria-label="Open Roblox golf game">
+            <img loading="lazy" decoding="async" src="assets/golfgame.png" alt="Roblox golf game" width="360" height="360" />
+            <h2>Golf Game</h2>
           </a>
-          <a class="service-item" href="seo.html">
-            <h2>SEO Services</h2>
-            <p>Search visibility improvements through technical SEO, content intent, and local optimization.</p>
-          </a>
-          <a class="service-item" href="audit.html">
-            <h2>Free Website &amp; SEO Audit</h2>
-            <p>A practical review of your website performance, rankings, and growth opportunities.</p>
-          </a>
-          <a class="service-item" href="creations.html">
-            <h2>Digital Creations</h2>
-            <p>Creative assets and digital visuals that align your brand across channels.</p>
-          </a>
-          <a class="service-item" href="classescourses.html">
-            <h2>Classes &amp; Courses</h2>
-            <p>Training programs to help business owners and teams improve digital capability.</p>
+
+          <a class="tryapp-link" href="https://www.roblox.com/share?code=3b513826fad47c42ac904478f37ba056&type=ExperienceDetails&stamp=1783735228164" target="_blank" rel="noopener noreferrer" aria-label="Open Roblox Lagoon game">
+            <img loading="lazy" decoding="async" src="assets/lagoon.png" alt="Roblox Lagoon game" width="360" height="360" />
+            <h2>Lagoon</h2>
           </a>
         </div>
       </div>
@@ -123,6 +118,16 @@
     <footer class="site-footer">
       <div class="container">
         <p>&copy; 2026 Bryant Digital Solutions. All rights reserved.</p>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="index.html">Home</a>
+          <a href="aboutus.html">About Us</a>
+          <a href="contactus.html">Contact Us</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="allourservices.html">Our Services</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="tryapps.html">Try Our Apps</a>
+          <a href="trygames.html" aria-current="page">Try Our Games</a>
+        </nav>
         <p class="footer-contact">Call: <a href="tel:+447843969254">07843 969254</a> | Email: <a href="mailto:info@bryantdigitalsolutions.com">info@bryantdigitalsolutions.com</a></p>
       </div>
     </footer>
@@ -130,20 +135,30 @@
     <script>
       const navToggle = document.querySelector('.nav-toggle');
       const siteNav = document.querySelector('.site-nav');
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      const dropdownParent = document.querySelector('.has-dropdown');
 
       navToggle?.addEventListener('click', () => {
         const isOpen = siteNav.classList.toggle('is-open');
         navToggle.setAttribute('aria-expanded', String(isOpen));
       });
 
-      dropdownToggle?.addEventListener('click', () => {
-        const expanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
-        dropdownToggle.setAttribute('aria-expanded', String(!expanded));
-        dropdownParent?.classList.toggle('open');
+      document.querySelectorAll('.has-dropdown').forEach((dropdown) => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+
+        toggle?.addEventListener('click', () => {
+          const expanded = toggle.getAttribute('aria-expanded') === 'true';
+
+          document.querySelectorAll('.has-dropdown.open').forEach((openDropdown) => {
+            if (openDropdown !== dropdown) {
+              openDropdown.classList.remove('open');
+              openDropdown.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          toggle.setAttribute('aria-expanded', String(!expanded));
+          dropdown.classList.toggle('open', !expanded);
+        });
       });
     </script>
-      <script src="assets/site.js"></script>
+    <script src="assets/site.js"></script>
   </body>
 </html>

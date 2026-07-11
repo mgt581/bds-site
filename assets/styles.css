@@ -1191,6 +1191,10 @@ h1 {
   border-color: rgba(151, 120, 71, 0.45);
 }
 
+.games-platform-heading {
+  margin: 1.25rem 0 0.75rem;
+}
+
 .gallery-main {
   padding-top: clamp(1.3rem, 3vw, 2rem);
 }
