@@ -42,13 +42,21 @@
 
         <nav id="primary-nav" class="site-nav" aria-label="Primary">
           <ul class="nav-list">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html" aria-current="page">Home</a></li>
             <li><a href="aboutus.html">About Us</a></li>
-            <li><a href="contactus.html">Contact Us</a></li>
-            <li><a href="privacy.html">Privacy Policy</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contactus.html">Contact us</a></li>
             <li class="has-dropdown">
-              <button class="dropdown-toggle" type="button" aria-expanded="false">Our Services</button>
+              <button class="dropdown-toggle" type="button" aria-expanded="false">
+                Privacy Policy <span class="nav-caret" aria-hidden="true">▼</span>
+              </button>
+              <ul class="dropdown-menu" aria-label="Privacy menu">
+                <li><a href="privacy.html">Privacy Policy</a></li>
+              </ul>
+            </li>
+            <li class="has-dropdown">
+              <button class="dropdown-toggle" type="button" aria-expanded="false">
+                Our Services <span class="nav-caret" aria-hidden="true">▼</span>
+              </button>
               <ul class="dropdown-menu" aria-label="Services menu">
                 <li><a href="allourservices.html">All Our Services</a></li>
                 <li><a href="coding.html">Coding</a></li>
@@ -59,6 +67,17 @@
                 <li><a href="audit.html">Free Website &amp; SEO Audit</a></li>
                 <li><a href="creations.html">Digital Creations</a></li>
                 <li><a href="classescourses.html">Classes &amp; Courses</a></li>
+              </ul>
+            </li>
+            <li class="has-dropdown nav-more">
+              <button class="dropdown-toggle" type="button" aria-expanded="false" aria-label="More pages">
+                <span aria-hidden="true">...</span>
+              </button>
+              <ul class="dropdown-menu" aria-label="More pages menu">
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="creations.html">Digital Creations</a></li>
+                <li><a href="classescourses.html">Classes &amp; Courses</a></li>
+                <li><a href="audit.html">Free Website &amp; SEO Audit</a></li>
               </ul>
             </li>
           </ul>
@@ -436,18 +455,28 @@
     <script>
       const navToggle = document.querySelector('.nav-toggle');
       const siteNav = document.querySelector('.site-nav');
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      const dropdownParent = document.querySelector('.has-dropdown');
 
       navToggle?.addEventListener('click', () => {
         const isOpen = siteNav.classList.toggle('is-open');
         navToggle.setAttribute('aria-expanded', String(isOpen));
       });
 
-      dropdownToggle?.addEventListener('click', () => {
-        const expanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
-        dropdownToggle.setAttribute('aria-expanded', String(!expanded));
-        dropdownParent?.classList.toggle('open');
+      document.querySelectorAll('.has-dropdown').forEach((dropdown) => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+
+        toggle?.addEventListener('click', () => {
+          const expanded = toggle.getAttribute('aria-expanded') === 'true';
+
+          document.querySelectorAll('.has-dropdown.open').forEach((openDropdown) => {
+            if (openDropdown !== dropdown) {
+              openDropdown.classList.remove('open');
+              openDropdown.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          toggle.setAttribute('aria-expanded', String(!expanded));
+          dropdown.classList.toggle('open', !expanded);
+        });
       });
     </script>
 

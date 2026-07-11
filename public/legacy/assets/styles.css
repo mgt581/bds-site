@@ -47,11 +47,11 @@ body {
 }
 
 .nav-wrap {
-  min-height: 86px;
+  min-height: clamp(104px, 8.8vw, 178px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.6rem;
+  gap: clamp(1.8rem, 4vw, 4.8rem);
 }
 
 .brand {
@@ -60,9 +60,10 @@ body {
 }
 
 .brand img {
-  width: clamp(124px, 14vw, 170px);
+  width: clamp(88px, 6.2vw, 116px);
   height: auto;
   display: block;
+  border-radius: 50%;
 }
 
 .site-nav {
@@ -75,29 +76,45 @@ body {
   padding: 0;
   display: flex;
   align-items: center;
-  gap: clamp(0.6rem, 1.6vw, 1.35rem);
+  gap: clamp(1rem, 2.2vw, 2.4rem);
 }
 
 .nav-list a,
 .dropdown-toggle {
   color: var(--light);
   text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.02rem, 1.28vw, 1.42rem);
+  font-weight: 600;
   letter-spacing: 0.02em;
   border: 0;
   background: transparent;
   cursor: pointer;
-  padding: 0.65rem 0.82rem;
-  border-radius: 0.7rem;
+  padding: 0.95rem 0.12rem;
+  position: relative;
   transition: background-color 180ms ease, color 180ms ease;
+}
+
+.nav-list a[aria-current="page"] {
+  color: #b8cce7;
+}
+
+.nav-list a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0.46rem;
+  left: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: #9fb7d6;
 }
 
 .nav-list a:hover,
 .nav-list a:focus-visible,
 .dropdown-toggle:hover,
 .dropdown-toggle:focus-visible {
-  background: rgba(187, 159, 106, 0.25);
+  background: transparent;
   color: #ffffff;
 }
 
@@ -153,15 +170,17 @@ body {
 
 .nav-toggle span {
   display: block;
-  height: 2px;
+  flex: 0 0 2px;
+  min-height: 2px;
   width: 100%;
   margin: 5px 0;
   background: #f8f3e8;
+  border-radius: 999px;
 }
 
 .hero {
   position: relative;
-  min-height: clamp(380px, 62vh, 680px);
+  min-height: clamp(560px, 72svh, 880px);
   width: 100%;
   background-image: url("./hero-bds.PNG");
   background-size: cover;
@@ -1063,17 +1082,31 @@ textarea {
 
   .dropdown-menu {
     position: static;
+    display: none;
     min-width: 100%;
     max-width: none;
     margin-top: 0.35rem;
     transform: none;
     box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .has-dropdown.open .dropdown-menu {
+    display: block;
   }
 
   .nav-toggle {
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .hero {
+    min-height: 0;
+    aspect-ratio: 3 / 2;
+    background-size: cover;
+    background-position: center;
   }
 
   .audit-grid,
@@ -1091,8 +1124,17 @@ textarea {
   }
 
   .quick-actions {
-    right: 0.6rem;
-    bottom: 0.6rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.28rem;
+  }
+
+  .quick-btn {
+    min-width: 0;
+    padding: 0.48rem 0.35rem;
+    font-size: 0.72rem;
   }
 
   .ai-chat-popup {
