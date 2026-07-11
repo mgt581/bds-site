@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const enableInternalPagePrefetch = () => {
+    const MAX_IDLE_PREFETCH_COUNT = 6;
     const prefetched = new Set();
     const supportsPrefetch = (() => {
       const link = document.createElement("link");
@@ -49,8 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const schedule = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 250));
     schedule(() => {
-      const links = document.querySelectorAll('a[href$=".html"], a[href="/"], a[href="./"], a[href="index.html"]');
-      for (let i = 0; i < Math.min(links.length, 6); i += 1) {
+      const links = document.querySelectorAll('a[href$=".html"], a[href="/"], a[href="index.html"]');
+      for (let i = 0; i < Math.min(links.length, MAX_IDLE_PREFETCH_COUNT); i += 1) {
         const href = links[i].getAttribute("href");
         if (href) prefetchHref(href);
       }
