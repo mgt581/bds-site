@@ -7,6 +7,11 @@
   --sand: #e7dcc8;
   --gold: #bb9f6a;
   --gold-deep: #977847;
+  --header-start: rgba(9, 18, 27, 0.92);
+  --header-end: rgba(21, 35, 47, 0.9);
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-border: rgba(15, 31, 43, 0.14);
+  --surface-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
   --overlay: rgba(9, 18, 27, 0.38);
   --card: rgba(255, 255, 255, 0.82);
   --container: min(1120px, calc(100vw - 2rem));
@@ -42,7 +47,7 @@ body {
   top: 0;
   z-index: 50;
   backdrop-filter: blur(8px);
-  background: linear-gradient(90deg, rgba(9, 18, 27, 0.9) 0%, rgba(21, 35, 47, 0.88) 100%);
+  background: linear-gradient(90deg, var(--header-start) 0%, var(--header-end) 100%);
   border-bottom: 1px solid rgba(244, 239, 229, 0.2);
 }
 
@@ -96,7 +101,7 @@ body {
 }
 
 .nav-list a[aria-current="page"] {
-  color: #b8cce7;
+  color: #f1dfba;
 }
 
 .nav-list a[aria-current="page"]::after {
@@ -107,7 +112,7 @@ body {
   left: 0;
   height: 3px;
   border-radius: 999px;
-  background: #9fb7d6;
+  background: var(--gold);
 }
 
 .nav-list a:hover,
@@ -180,12 +185,13 @@ body {
 
 .hero {
   position: relative;
-  min-height: clamp(560px, 72svh, 880px);
+  min-height: clamp(320px, 54svh, 620px);
   width: 100%;
   background-image: url("./hero-bds.PNG");
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: #0a1621;
 }
 
 .hero-overlay {
@@ -201,11 +207,11 @@ body {
 }
 
 .intro-content {
-  background: var(--card);
-  border: 1px solid rgba(151, 120, 71, 0.22);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1.2rem;
   padding: clamp(1.1rem, 3vw, 2.4rem);
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 h1,
@@ -260,10 +266,10 @@ h1 {
 
 .audit-media,
 .audit-content {
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 31, 43, 0.13);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .audit-media {
@@ -319,10 +325,10 @@ h1 {
 
 .services-content,
 .services-media {
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 31, 43, 0.13);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .services-content {
@@ -364,10 +370,10 @@ h1 {
 
 .website-design-media,
 .website-design-content {
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 31, 43, 0.13);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .website-design-media {
@@ -409,10 +415,10 @@ h1 {
 
 .social-media-content,
 .social-media-media {
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 31, 43, 0.13);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .social-media-content {
@@ -454,10 +460,10 @@ h1 {
 
 .seo-media,
 .seo-content {
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 31, 43, 0.13);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .seo-media {
@@ -499,10 +505,10 @@ h1 {
 
 .ads-content,
 .ads-media {
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 31, 43, 0.13);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .ads-content {
@@ -544,10 +550,10 @@ h1 {
 
 .group-links-media,
 .group-links-content {
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 31, 43, 0.13);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .group-links-media {
@@ -587,10 +593,10 @@ h1 {
 }
 
 .contact-panel {
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 31, 43, 0.13);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
   padding: clamp(1rem, 2.8vw, 1.8rem);
 }
 
@@ -609,10 +615,10 @@ h1 {
 }
 
 .faq-panel {
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 31, 43, 0.13);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(20, 33, 44, 0.08);
+  box-shadow: var(--surface-shadow);
   padding: clamp(1rem, 2.8vw, 1.8rem);
 }
 
@@ -658,10 +664,26 @@ h1 {
 }
 
 .trust-grid article {
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(15, 31, 43, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
   padding: 1rem;
+}
+
+.audit-media img,
+.services-media img,
+.website-design-media img,
+.social-media-media img,
+.seo-media img,
+.ads-media img,
+.group-links-media img {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: linear-gradient(180deg, #f4eee2 0%, #efe6d6 100%);
+  display: block;
 }
 
 .trust-grid h3 {
@@ -1104,9 +1126,19 @@ textarea {
 
   .hero {
     min-height: 0;
-    aspect-ratio: 3 / 2;
-    background-size: cover;
+    aspect-ratio: 16 / 10;
+    background-size: contain;
     background-position: center;
+  }
+
+  .audit-media img,
+  .services-media img,
+  .website-design-media img,
+  .social-media-media img,
+  .seo-media img,
+  .ads-media img,
+  .group-links-media img {
+    aspect-ratio: 4 / 3;
   }
 
   .audit-grid,
