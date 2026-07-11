@@ -57,9 +57,21 @@ function validateHostname(hostname: string): string | null {
     }
   }
 
-  // Block IPv6 private/loopback patterns
-  if (lower.startsWith('[') || lower === '::1' || lower.startsWith('fc') || lower.startsWith('fd')) {
-    return `Requests to private IPv6 addresses are not allowed.`;
+  // Block IPv6 private/loopback: only match when hostname is a bracketed
+  // IPv6 literal (e.g. [::1], [fc00::1], [fe80::1]).
+  // ULA range: fc00::/7 (starts with fc or fd)
+  // Loopback: ::1
+  // Link-local: fe80::/10 (starts with fe80)
+  if (lower.startsWith('[')) {
+    const inner = lower.slice(1, lower.indexOf(']') !== -1 ? lower.indexOf(']') : lower.length);
+    if (
+      inner === '::1' ||
+      inner.startsWith('fc') ||
+      inner.startsWith('fd') ||
+      inner.toLowerCase().startsWith('fe80')
+    ) {
+      return `Requests to private IPv6 addresses are not allowed.`;
+    }
   }
 
   return null;
@@ -120,6 +132,11 @@ export async function fetchPage(rawUrl: string): Promise<PageData> {
   let statusCode = 0;
   let fetchError: string | undefined;
 
+  // NOTE: Fetching a user-supplied URL is the intentional purpose of this
+  // SEO audit tool. SSRF is mitigated by `parseAuditUrl` above, which:
+  //  - only allows http/https schemes
+  //  - rejects private IPv4 ranges (RFC 1918, link-local, shared, loopback)
+  //  - rejects known loopback hostnames and private IPv6 ranges
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);

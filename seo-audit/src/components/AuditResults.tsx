@@ -210,7 +210,7 @@ function FindingCard({
     ? 'badge-medium'
     : 'badge-low';
 
-  const borderColour = isPass
+  const borderColor = isPass
     ? 'border-l-green-400'
     : finding.priority === 'high'
     ? 'border-l-red-400'
@@ -220,7 +220,7 @@ function FindingCard({
 
   return (
     <div
-      className={`card border-l-4 ${borderColour} py-4 px-5 space-y-2`}
+      className={`card border-l-4 ${borderColor} py-4 px-5 space-y-2`}
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <span className="text-sm font-semibold text-gray-800">{finding.label}</span>
