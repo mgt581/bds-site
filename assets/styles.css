@@ -1163,19 +1163,19 @@ h1 {
 .socialmedia-page-card::before,
 .seoservices-page-card::before,
 .audit-page-card::before,
-.creations-page-card::before,
-.classescourses-page-card::before {
+.creations-page-card::before {
   height: clamp(220px, 32vw, 340px);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center 46%;
 }
 
-/* Coding, Ads, and Website Services pages use explicit <picture> elements instead of
-   a CSS background pseudo-element, so suppress the inherited ::before banner. */
+/* These pages use explicit <picture> elements instead of a CSS background pseudo-element. */
 .coding-page-card::before,
 .ads-page-card::before,
-.websiteservices-page-card::before {
+.websiteservices-page-card::before,
+.classescourses-page-card::before,
+.contactus-page-card::before {
   display: none;
 }
 
@@ -1237,16 +1237,6 @@ h1 {
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./creations.webp");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center 46%;
-}
-
-.classescourses-page-card::before {
-  height: clamp(220px, 32vw, 340px);
-  background-image:
-    linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
-    url("./hero-bds.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center 46%;
