@@ -23,6 +23,10 @@
   box-sizing: border-box;
 }
 
+img {
+  max-width: 100%;
+}
+
 html,
 body {
   margin: 0;
@@ -685,14 +689,17 @@ h1 {
 }
 
 .ceo-media {
+  display: grid;
+  place-items: center;
   overflow: hidden;
+  background: linear-gradient(180deg, #08182d 0%, #0d2748 100%);
 }
 
 .ceo-media img {
   width: 100%;
-  height: 100%;
-  min-height: 320px;
-  object-fit: cover;
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
   display: block;
 }
 
@@ -713,10 +720,13 @@ h1 {
 }
 
 .ceo-proof-image {
-  width: 100%;
-  margin-top: auto;
-  min-height: 180px;
-  object-fit: cover;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 520px;
+  margin: 1rem auto 0;
+  min-height: 0;
+  object-fit: contain;
   border-radius: 0.8rem;
   border: 1px solid var(--surface-border);
   display: block;
@@ -1147,8 +1157,10 @@ h1 {
   background-image:
     linear-gradient(180deg, rgba(9, 18, 27, 0.2) 0%, rgba(9, 18, 27, 0.42) 100%),
     url("./hero-bds.webp");
-  background-size: cover;
-  background-position: center 24%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #08182d;
 }
 
 .page-card h1 {
@@ -1313,6 +1325,7 @@ h1 {
 
 .tryapp-link img {
   width: 100%;
+  height: auto;
   aspect-ratio: 1 / 1;
   object-fit: contain;
   border-radius: 0.7rem;
@@ -1403,8 +1416,10 @@ h1 {
 
 .slideshow-track img {
   width: 100%;
-  height: clamp(140px, 20vw, 200px);
-  object-fit: cover;
+  height: clamp(180px, 24vw, 240px);
+  object-fit: contain;
+  background: linear-gradient(180deg, #08182d 0%, #0d2748 100%);
+  padding: 0.25rem;
   display: block;
 }
 
@@ -1592,6 +1607,18 @@ textarea {
   .group-links-media img {
     max-height: min(62vw, 460px);
     object-fit: contain;
+  }
+
+  .ceo-proof-image {
+    max-height: min(120vw, 520px);
+  }
+
+  .slideshow-track figure {
+    width: min(76vw, 280px);
+  }
+
+  .slideshow-track img {
+    height: min(64vw, 240px);
   }
 
   .audit-grid,
