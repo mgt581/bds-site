@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       toggle.setAttribute("aria-expanded", String(!expanded));
       dropdown.classList.toggle("open", !expanded);
+      // When closing, remove button focus so :focus-within doesn't keep the dropdown visible
+      if (expanded) {
+        toggle.blur();
+      }
     });
   });
 
