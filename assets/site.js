@@ -1,4 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const navToggle = document.querySelector(".nav-toggle");
+  const siteNav = document.querySelector(".site-nav");
+
+  navToggle?.addEventListener("click", () => {
+    const isOpen = siteNav.classList.toggle("is-open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  document.querySelectorAll(".has-dropdown").forEach((dropdown) => {
+    const toggle = dropdown.querySelector(".dropdown-toggle");
+
+    toggle?.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+
+      document.querySelectorAll(".has-dropdown.open").forEach((openDropdown) => {
+        if (openDropdown !== dropdown) {
+          openDropdown.classList.remove("open");
+          openDropdown.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      dropdown.classList.toggle("open", !expanded);
+    });
+  });
+
   const enableInternalPagePrefetch = () => {
     const MAX_IDLE_PREFETCH_COUNT = 6;
     const prefetched = new Set();
