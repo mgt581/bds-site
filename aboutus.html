@@ -121,23 +121,6 @@
       </div>
     </footer>
 
-    <script>
-      const navToggle = document.querySelector('.nav-toggle');
-      const siteNav = document.querySelector('.site-nav');
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      const dropdownParent = document.querySelector('.has-dropdown');
-
-      navToggle?.addEventListener('click', () => {
-        const isOpen = siteNav.classList.toggle('is-open');
-        navToggle.setAttribute('aria-expanded', String(isOpen));
-      });
-
-      dropdownToggle?.addEventListener('click', () => {
-        const expanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
-        dropdownToggle.setAttribute('aria-expanded', String(!expanded));
-        dropdownParent?.classList.toggle('open');
-      });
-    </script>
       <script src="assets/site.js"></script>
   </body>
 </html>
