@@ -37,11 +37,11 @@ env:
       - BUILD
       - RUNTIME
   - variable: RESEND_FROM_EMAIL
-    value: noreply@bryantdigitalsolutions.com
+    value: Bryant Digital Solutions <info@bryantdigitalsolutions.com>
     availability:
       - RUNTIME
   - variable: ADMIN_EMAIL
-    value: info@bryantdigitalsolutions.com
+    value: ajbryantsleads@gmail.com
     availability:
       - RUNTIME
   - variable: RESEND_API_KEY
@@ -54,5 +54,9 @@ env:
       - RUNTIME
   - variable: PAGESPEED_API_KEY
     secret: bdsPagespeedApiKey
+    availability:
+      - RUNTIME
+  - variable: ALLOWED_ORIGINS
+    value: https://bryantdigitalsolutions.com,https://www.bryantdigitalsolutions.com,https://mgt581.github.io
     availability:
       - RUNTIME
