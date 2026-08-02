@@ -202,6 +202,86 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  const FREE_AUDIT_SERVICE = "Free Website and SEO Audit";
+  const setContactStatus = (form, message, isError = false) => {
+    let status = form.querySelector(".contact-form-status");
+    if (!status) {
+      status = document.createElement("p");
+      status.className = "contact-form-status";
+      status.setAttribute("role", "status");
+      status.setAttribute("aria-live", "polite");
+      form.appendChild(status);
+    }
+    status.classList.toggle("is-error", isError);
+    status.textContent = message;
+  };
+
+  document.querySelectorAll('form.form-grid[aria-label="Homepage contact form"]').forEach((form) => {
+    const service = form.querySelector('select[name="service"]');
+    const company = form.querySelector('input[name="company"]');
+    const name = form.querySelector('input[name="name"]');
+    const email = form.querySelector('input[name="email"]');
+    const phone = form.querySelector('input[name="phone"]');
+    const message = form.querySelector('textarea[name="message"]');
+    const submit = form.querySelector('button[type="submit"]');
+    if (!service || !name || !email || !message) return;
+
+    const websiteWrap = document.createElement("div");
+    websiteWrap.className = "full js-contact-website";
+    websiteWrap.hidden = true;
+    websiteWrap.innerHTML = '<label>Website URL to audit <span>(required for a free audit)</span></label><input name="website" type="url" placeholder="https://yourbusiness.com" autocomplete="url" />';
+    const messageWrap = message.closest(".full");
+    messageWrap?.before(websiteWrap);
+    const website = websiteWrap.querySelector('input[name="website"]');
+
+    const syncAuditField = () => {
+      const isAudit = service.value === FREE_AUDIT_SERVICE;
+      websiteWrap.hidden = !isAudit;
+      website.required = isAudit;
+    };
+    service.addEventListener("change", syncAuditField);
+    syncAuditField();
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      const values = {
+        name: name.value.trim(), email: email.value.trim(), phone: phone?.value.trim() || "",
+        businessName: company?.value.trim() || "", service: service.value,
+        message: message.value.trim(), website: website?.value.trim() || "",
+      };
+      const isAudit = values.service === FREE_AUDIT_SERVICE;
+      submit?.setAttribute("disabled", "");
+      setContactStatus(form, isAudit ? "Running your website audit. This may take up to a minute..." : "Sending your enquiry...");
+      try {
+        if (isAudit) {
+          const auditResponse = await fetch(`${backendOrigin}/api/audit`, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...values, businessName: values.businessName || values.name }),
+          });
+          const auditData = await auditResponse.json();
+          if (!auditResponse.ok) throw new Error(auditData.error || "Unable to run your audit.");
+          // Preserve the project's message in Alex's inbox as well as the audit report notification.
+          await fetch(`${backendOrigin}/api/contact`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(values) });
+          window.location.href = `${backendOrigin}/audit/${auditData.reportId}`;
+          return;
+        }
+        const response = await fetch(`${backendOrigin}/api/contact`, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(values),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Unable to send your enquiry.");
+        form.reset();
+        syncAuditField();
+        setContactStatus(form, "Thanks — your enquiry has been sent. Alex will be in touch shortly.");
+      } catch (error) {
+        setContactStatus(form, error instanceof Error ? error.message : "Unable to send your enquiry. Please try again.", true);
+      } finally {
+        submit?.removeAttribute("disabled");
+      }
+    });
+  });
+
   aiForm?.addEventListener("submit", (event) => {
     event.preventDefault();
     const question = (aiInput?.value || "").trim();

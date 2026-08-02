@@ -11,14 +11,20 @@ import { prisma } from '@/lib/db'
 export const maxDuration = 60
 export const dynamic = 'force-dynamic'
 
-const ALLOWED_ORIGINS = new Set([
+const DEFAULT_ALLOWED_ORIGINS = [
   'https://bryantdigitalsolutions.com',
   'https://www.bryantdigitalsolutions.com',
   'https://mgt581.github.io',
   'https://bds-site--bdssite-5fac1.europe-west4.hosted.app',
   'http://localhost:3000',
   'http://127.0.0.1:3000',
-])
+]
+const ALLOWED_ORIGINS = new Set(
+  (process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS.join(','))
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean)
+)
 
 function getCorsHeaders(request: NextRequest): HeadersInit {
   const origin = request.headers.get('origin') || ''

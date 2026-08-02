@@ -1662,3 +1662,13 @@ textarea {
     bottom: 12rem;
   }
 }
+
+.contact-form-status {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #1e3a5f;
+}
+
+.contact-form-status.is-error {
+  color: #b42318;
+}

@@ -1,17 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { z } from 'zod'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 export const dynamic = 'force-dynamic'
 
-const ALLOWED_ORIGINS = new Set([
+const DEFAULT_ALLOWED_ORIGINS = [
   'https://bryantdigitalsolutions.com',
   'https://www.bryantdigitalsolutions.com',
   'https://mgt581.github.io',
   'https://bds-site--bdssite-5fac1.europe-west4.hosted.app',
   'http://localhost:3000',
   'http://127.0.0.1:3000',
-])
+]
+const ALLOWED_ORIGINS = new Set(
+  (process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS.join(','))
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean)
+)
 
 const enquirySchema = z.object({
   name: z.string().trim().min(2).max(120),
@@ -40,12 +47,23 @@ function json(request: NextRequest, body: unknown, status = 200) {
   return NextResponse.json(body, { status, headers: corsHeaders(request) })
 }
 
+function getClientIp(request: NextRequest): string {
+  return request.headers.get('x-forwarded-for')?.split(',')[0].trim()
+    || request.headers.get('x-real-ip')
+    || 'unknown'
+}
+
 export async function OPTIONS(request: NextRequest) {
   return new NextResponse(null, { status: 204, headers: corsHeaders(request) })
 }
 
 export async function POST(request: NextRequest) {
   try {
+    const rateLimit = checkRateLimit(`contact:${getClientIp(request)}`)
+    if (!rateLimit.allowed) {
+      return json(request, { error: 'Too many requests. Please try again later.' }, 429)
+    }
+
     const parsed = enquirySchema.safeParse(await request.json())
     if (!parsed.success) {
       return json(request, { error: 'Please check the form and try again.' }, 400)

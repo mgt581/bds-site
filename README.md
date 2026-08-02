@@ -162,3 +162,36 @@ Required GitHub setting:
 
 - Repository Settings -> Pages -> Build and deployment: Deploy from a branch.
 - Branch: `main`, Folder: `/(root)`.
+
+## Contact form and email production checklist
+
+The static GitHub Pages forms must never use a normal HTML `POST`: GitHub Pages has
+no server-side form handler and responds with HTTP 405. `assets/site.js` intercepts
+both contact forms and sends JSON to the hosted Next API instead:
+
+- normal enquiry: `POST /api/contact`
+- **Free Website and SEO Audit**: requires Website URL and sends `POST /api/audit`,
+  which creates the report, emails the visitor, and sends Alex the lead/audit details.
+
+Before deploying, set the following App Hosting runtime values (or their Cloudflare
+equivalents if a Cloudflare Worker/proxy is placed in front of this app):
+
+| Setting | Required value |
+| --- | --- |
+| `RESEND_API_KEY` | Resend API key with permission to send from the verified domain |
+| `RESEND_FROM_EMAIL` | `Bryant Digital Solutions <info@bryantdigitalsolutions.com>` |
+| `ADMIN_EMAIL` | `ajbryantsleads@gmail.com` |
+| `NEXT_PUBLIC_APP_URL` | Public URL of the hosted Next app that serves `/audit/:id` |
+| `ALLOWED_ORIGINS` | `https://bryantdigitalsolutions.com,https://www.bryantdigitalsolutions.com,https://mgt581.github.io` (remove any URL that is not live) |
+
+In Resend, verify `bryantdigitalsolutions.com` and publish every DNS record it
+provides (SPF and DKIM at minimum). Resend will reject the configured sender until
+the domain is verified. In Cloudflare DNS, use **DNS only** for the Resend DKIM and
+SPF records unless Resend explicitly says a record may be proxied.
+
+This repository currently deploys its API using **Firebase App Hosting**
+(`apphosting.yaml`); it does not contain a Cloudflare Worker. If Cloudflare is being
+used, it must route `/api/*` and `/audit/*` to the same hosted Next application and
+allow `POST` and `OPTIONS` through unchanged. Do not point the public forms at a
+Cloudflare Pages/static route, or a static GitHub Pages URL: either will recreate the
+405 error.
