@@ -61,6 +61,10 @@ env:
     secret: bdsPagespeedApiKey
     availability:
       - RUNTIME
+  - variable: GOOGLE_REVIEWS_URL
+    value: https://share.google/CXVLfLhnIW2oIhY9i
+    availability:
+      - RUNTIME
   - variable: ALLOWED_ORIGINS
     value: https://bryantdigitalsolutions.com,https://www.bryantdigitalsolutions.com,https://mgt581.github.io
     availability:
