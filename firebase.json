@@ -10,6 +10,9 @@
         ".env",
         ".env.*",
         ".neon",
+        "assets",
+        "docs",
+        "*.html",
         "firebase-debug.log",
         "firebase-debug.*.log",
         "public/legacy/Ads.html"

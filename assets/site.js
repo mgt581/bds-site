@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const websiteWrap = document.createElement("div");
     websiteWrap.className = "full js-contact-website";
     websiteWrap.hidden = true;
-    websiteWrap.innerHTML = '<label>Website URL to audit <span>(required for a free audit)</span></label><input name="website" type="url" placeholder="https://yourbusiness.com" autocomplete="url" />';
+    websiteWrap.innerHTML = '<label for="homepage-contact-website">Website URL to audit <span>(required for a free audit)</span></label><input id="homepage-contact-website" name="website" type="url" placeholder="https://yourbusiness.com" autocomplete="url" />';
     const messageWrap = message.closest(".full");
     messageWrap?.before(websiteWrap);
     const website = websiteWrap.querySelector('input[name="website"]');
@@ -238,6 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const isAudit = service.value === FREE_AUDIT_SERVICE;
       websiteWrap.hidden = !isAudit;
       website.required = isAudit;
+      if (submit) submit.textContent = isAudit ? "Run My Free Audit" : "Send Enquiry";
     };
     service.addEventListener("change", syncAuditField);
     syncAuditField();
@@ -247,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!form.reportValidity()) return;
       const values = {
         name: name.value.trim(), email: email.value.trim(), phone: phone?.value.trim() || "",
-        businessName: company?.value.trim() || "", service: service.value,
+        company: company?.value.trim() || "", service: service.value,
         message: message.value.trim(), website: website?.value.trim() || "",
       };
       const isAudit = values.service === FREE_AUDIT_SERVICE;
@@ -257,7 +258,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isAudit) {
           const auditResponse = await fetch(`${backendOrigin}/api/audit`, {
             method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...values, businessName: values.businessName || values.name }),
+            body: JSON.stringify({
+              name: values.name,
+              email: values.email,
+              phone: values.phone,
+              website: values.website,
+              businessName: values.company || values.name,
+            }),
           });
           const auditData = await auditResponse.json();
           if (!auditResponse.ok) throw new Error(auditData.error || "Unable to run your audit.");
