@@ -9,8 +9,11 @@ import { checkRateLimit } from '@/lib/rate-limit'
 import { prisma } from '@/lib/db'
 
 export const maxDuration = 60
+export const dynamic = 'force-dynamic'
 
 const ALLOWED_ORIGINS = new Set([
+  'https://bryantdigitalsolutions.com',
+  'https://www.bryantdigitalsolutions.com',
   'https://mgt581.github.io',
   'https://bds-site--bdssite-5fac1.europe-west4.hosted.app',
   'http://localhost:3000',
@@ -21,7 +24,7 @@ function getCorsHeaders(request: NextRequest): HeadersInit {
   const origin = request.headers.get('origin') || ''
   const allowOrigin = ALLOWED_ORIGINS.has(origin)
     ? origin
-    : 'https://bds-site--bdssite-5fac1.europe-west4.hosted.app'
+    : 'https://bryantdigitalsolutions.com'
 
   return {
     'Access-Control-Allow-Origin': allowOrigin,
@@ -34,10 +37,7 @@ function getCorsHeaders(request: NextRequest): HeadersInit {
 function jsonWithCors(request: NextRequest, body: unknown, init?: ResponseInit) {
   return NextResponse.json(body, {
     ...init,
-    headers: {
-      ...(init?.headers || {}),
-      ...getCorsHeaders(request),
-    },
+    headers: { ...(init?.headers || {}), ...getCorsHeaders(request) },
   })
 }
 
@@ -48,10 +48,7 @@ function getClientIp(request: NextRequest): string {
 }
 
 export async function OPTIONS(request: NextRequest) {
-  return new NextResponse(null, {
-    status: 204,
-    headers: getCorsHeaders(request),
-  })
+  return new NextResponse(null, { status: 204, headers: getCorsHeaders(request) })
 }
 
 export async function POST(request: NextRequest) {
@@ -59,34 +56,26 @@ export async function POST(request: NextRequest) {
     const ip = getClientIp(request)
     const rateLimit = checkRateLimit(ip)
     if (!rateLimit.allowed) {
-      return jsonWithCors(
-        request,
-        {
-          error: 'Too many audit requests. Please try again later.',
-          resetAt: rateLimit.resetAt,
-        },
-        { status: 429 }
-      )
+      return jsonWithCors(request, {
+        error: 'Too many audit requests. Please try again later.',
+        resetAt: rateLimit.resetAt,
+      }, { status: 429 })
     }
 
     const body = await request.json()
     const parsed = auditRequestSchema.safeParse(body)
     if (!parsed.success) {
-      return jsonWithCors(
-        request,
-        { error: 'Invalid request', details: parsed.error.flatten().fieldErrors },
-        { status: 400 }
-      )
+      return jsonWithCors(request, {
+        error: 'Please check the details and website URL, then try again.',
+        details: parsed.error.flatten().fieldErrors,
+      }, { status: 400 })
     }
 
     const { name, email, phone, website, businessName } = parsed.data
-
-    // Run the audit engine against the target website.
     const auditData = await runAudit(website)
     const recommendations = generateRecommendations(auditData)
     const aiSummary = await generateAISummary(auditData, recommendations, businessName)
 
-    // Persist the lead and audit report.
     const lead = await prisma.lead.create({
       data: { name, email, phone, website, businessName },
     })
@@ -116,8 +105,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // Fire off emails without blocking the response on delivery failures.
-    const emailResults = await Promise.allSettled([
+    const [customerEmail, adminEmail] = await Promise.all([
       sendCustomerAuditEmail({
         to: email,
         businessName,
@@ -137,23 +125,26 @@ export async function POST(request: NextRequest) {
       }),
     ])
 
-    const emailWarnings = emailResults
-      .filter((r) => r.status === 'rejected')
-      .map((r) => (r as PromiseRejectedResult).reason?.message || 'Unknown email error')
+    const emailWarnings = [
+      !customerEmail.sent ? `Customer email: ${customerEmail.error || 'not sent'}` : null,
+      !adminEmail.sent ? `Admin email: ${adminEmail.error || 'not sent'}` : null,
+    ].filter(Boolean)
 
     return jsonWithCors(request, {
       success: true,
       reportId: report.id,
       leadId: lead.id,
       scores: auditData.scores,
-      emailWarnings: emailWarnings.length > 0 ? emailWarnings : undefined,
+      emails: {
+        customer: customerEmail.sent,
+        admin: adminEmail.sent,
+      },
+      emailWarnings: emailWarnings.length ? emailWarnings : undefined,
     })
   } catch (err) {
     console.error('[api/audit] Unexpected error:', err)
-    return jsonWithCors(
-      request,
-      { error: 'Something went wrong while running your audit. Please try again.' },
-      { status: 500 }
-    )
+    return jsonWithCors(request, {
+      error: 'Something went wrong while running your audit. Please check the URL and try again.',
+    }, { status: 500 })
   }
 }
