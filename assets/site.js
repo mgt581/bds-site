@@ -261,8 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
           });
           const auditData = await auditResponse.json();
           if (!auditResponse.ok) throw new Error(auditData.error || "Unable to run your audit.");
-          // Preserve the project's message in Alex's inbox as well as the audit report notification.
-          await fetch(`${backendOrigin}/api/contact`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(values) });
           window.location.href = `${backendOrigin}/audit/${auditData.reportId}`;
           return;
         }

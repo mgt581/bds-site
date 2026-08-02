@@ -36,8 +36,13 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  - variable: NEXT_PUBLIC_FRONTEND_URL
+    value: https://bryantdigitalsolutions.com
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: RESEND_FROM_EMAIL
-    value: Bryant Digital Solutions <info@bryantdigitalsolutions.com>
+    value: "Bryant Digital Solutions <info@bryantdigitalsolutions.com>"
     availability:
       - RUNTIME
   - variable: ADMIN_EMAIL
@@ -58,5 +63,9 @@ env:
       - RUNTIME
   - variable: ALLOWED_ORIGINS
     value: https://bryantdigitalsolutions.com,https://www.bryantdigitalsolutions.com,https://mgt581.github.io
+    availability:
+      - RUNTIME
+  - variable: RELEASE_ID
+    value: 2026-08-02-audit-flow-v3
     availability:
       - RUNTIME

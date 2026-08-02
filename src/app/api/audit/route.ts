@@ -7,43 +7,15 @@ import { generateHtmlReport } from '@/lib/report'
 import { sendCustomerAuditEmail, sendAdminNotificationEmail } from '@/lib/email'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { prisma } from '@/lib/db'
+import { corsHeaders } from '@/lib/http/cors'
 
 export const maxDuration = 60
 export const dynamic = 'force-dynamic'
 
-const DEFAULT_ALLOWED_ORIGINS = [
-  'https://bryantdigitalsolutions.com',
-  'https://www.bryantdigitalsolutions.com',
-  'https://mgt581.github.io',
-  'https://bds-site--bdssite-5fac1.europe-west4.hosted.app',
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-]
-const ALLOWED_ORIGINS = new Set(
-  (process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS.join(','))
-    .split(',')
-    .map((origin) => origin.trim())
-    .filter(Boolean)
-)
-
-function getCorsHeaders(request: NextRequest): HeadersInit {
-  const origin = request.headers.get('origin') || ''
-  const allowOrigin = ALLOWED_ORIGINS.has(origin)
-    ? origin
-    : 'https://bryantdigitalsolutions.com'
-
-  return {
-    'Access-Control-Allow-Origin': allowOrigin,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    Vary: 'Origin',
-  }
-}
-
 function jsonWithCors(request: NextRequest, body: unknown, init?: ResponseInit) {
   return NextResponse.json(body, {
     ...init,
-    headers: { ...(init?.headers || {}), ...getCorsHeaders(request) },
+    headers: { ...(init?.headers || {}), ...corsHeaders(request) },
   })
 }
 
@@ -54,7 +26,7 @@ function getClientIp(request: NextRequest): string {
 }
 
 export async function OPTIONS(request: NextRequest) {
-  return new NextResponse(null, { status: 204, headers: getCorsHeaders(request) })
+  return new NextResponse(null, { status: 204, headers: corsHeaders(request) })
 }
 
 export async function POST(request: NextRequest) {

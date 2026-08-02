@@ -2,23 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { z } from 'zod'
 import { checkRateLimit } from '@/lib/rate-limit'
+import { corsHeaders } from '@/lib/http/cors'
 
 export const dynamic = 'force-dynamic'
-
-const DEFAULT_ALLOWED_ORIGINS = [
-  'https://bryantdigitalsolutions.com',
-  'https://www.bryantdigitalsolutions.com',
-  'https://mgt581.github.io',
-  'https://bds-site--bdssite-5fac1.europe-west4.hosted.app',
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-]
-const ALLOWED_ORIGINS = new Set(
-  (process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS.join(','))
-    .split(',')
-    .map((origin) => origin.trim())
-    .filter(Boolean)
-)
 
 const enquirySchema = z.object({
   name: z.string().trim().min(2).max(120),
@@ -28,20 +14,6 @@ const enquirySchema = z.object({
   message: z.string().trim().min(5).max(5000),
   website: z.string().trim().max(2048).optional().default(''),
 })
-
-function corsHeaders(request: NextRequest): HeadersInit {
-  const origin = request.headers.get('origin') || ''
-  const allowOrigin = ALLOWED_ORIGINS.has(origin)
-    ? origin
-    : 'https://bryantdigitalsolutions.com'
-
-  return {
-    'Access-Control-Allow-Origin': allowOrigin,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    Vary: 'Origin',
-  }
-}
 
 function json(request: NextRequest, body: unknown, status = 200) {
   return NextResponse.json(body, { status, headers: corsHeaders(request) })
