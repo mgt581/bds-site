@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#review-form");
   const openButtons = document.querySelectorAll(".reviews-open-form");
   const closeButton = document.querySelector(".review-form-close");
-  const googleLinks = document.querySelectorAll(".reviews-google-button, .reviews-google-profile");
+  const googleReviewButton = document.querySelector(".reviews-google-button");
+  const googleProfileLinks = document.querySelectorAll(".reviews-google-profile");
 
   let reviews = [];
   let activeIndex = 0;
@@ -149,7 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) throw new Error(data.error || "Reviews could not be loaded.");
       reviews = Array.isArray(data.reviews) ? data.reviews : [];
       const profileUrl = data.google?.profileUrl;
-      if (profileUrl) googleLinks.forEach((link) => { link.href = profileUrl; });
+      if (profileUrl) googleProfileLinks.forEach((link) => { link.href = profileUrl; });
+      if (data.google?.writeReviewUrl && googleReviewButton) {
+        googleReviewButton.href = data.google.writeReviewUrl;
+      }
 
       if (summary) {
         if (data.google?.rating && data.google?.totalReviewCount) {

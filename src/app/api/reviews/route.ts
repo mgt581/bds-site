@@ -8,6 +8,9 @@ export const dynamic = 'force-dynamic'
 
 const GOOGLE_PROFILE_URL =
   process.env.GOOGLE_REVIEWS_URL || 'https://share.google/CXVLfLhnIW2oIhY9i'
+const GOOGLE_WRITE_REVIEW_URL =
+  process.env.GOOGLE_WRITE_REVIEW_URL ||
+  'https://www.google.com/search?q=Bryant+Digital+Solutions&kgmid=/g/11n9c6xgb0#lrd=0x4ef644c2eb5923ad:0x80ecb762e6c3ad84,3,,,,'
 
 const reviewSchema = z.object({
   name: z.string().trim().min(2).max(80),
@@ -77,11 +80,16 @@ async function getGoogleReviews() {
       rating: null,
       total: null,
       profileUrl: GOOGLE_PROFILE_URL,
+      writeReviewUrl: GOOGLE_WRITE_REVIEW_URL,
     }
   }
 
   if (googleCache && googleCache.expiresAt > Date.now()) {
-    return { connected: true, ...googleCache }
+    return {
+      connected: true,
+      ...googleCache,
+      writeReviewUrl: GOOGLE_WRITE_REVIEW_URL,
+    }
   }
 
   try {
@@ -122,7 +130,11 @@ async function getGoogleReviews() {
       profileUrl: data.googleMapsUri || GOOGLE_PROFILE_URL,
     }
 
-    return { connected: true, ...googleCache }
+    return {
+      connected: true,
+      ...googleCache,
+      writeReviewUrl: GOOGLE_WRITE_REVIEW_URL,
+    }
   } catch (error) {
     console.error('[api/reviews] Google review sync failed:', error)
     return {
@@ -131,6 +143,7 @@ async function getGoogleReviews() {
       rating: null,
       total: null,
       profileUrl: GOOGLE_PROFILE_URL,
+      writeReviewUrl: GOOGLE_WRITE_REVIEW_URL,
     }
   }
 }
@@ -183,6 +196,7 @@ export async function GET(request: NextRequest) {
         totalReviewCount: google.total,
         rating: google.rating,
         profileUrl: google.profileUrl,
+        writeReviewUrl: google.writeReviewUrl,
       },
     })
   } catch (error) {

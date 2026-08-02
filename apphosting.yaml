@@ -65,6 +65,10 @@ env:
     value: https://share.google/CXVLfLhnIW2oIhY9i
     availability:
       - RUNTIME
+  - variable: GOOGLE_WRITE_REVIEW_URL
+    value: "https://www.google.com/search?q=Bryant+Digital+Solutions&kgmid=/g/11n9c6xgb0#lrd=0x4ef644c2eb5923ad:0x80ecb762e6c3ad84,3,,,,"
+    availability:
+      - RUNTIME
   - variable: ALLOWED_ORIGINS
     value: https://bryantdigitalsolutions.com,https://www.bryantdigitalsolutions.com,https://mgt581.github.io
     availability:
