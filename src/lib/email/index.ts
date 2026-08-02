@@ -4,8 +4,10 @@ import type { Recommendation } from '../recommendations'
 import { renderCustomerEmail } from './templates/customer'
 import { renderAdminEmail } from './templates/admin'
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'noreply@bryantdigitalsolutions.com'
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'info@bryantdigitalsolutions.com'
+const FROM_EMAIL =
+  process.env.RESEND_FROM_EMAIL ||
+  'Bryant Digital Solutions <info@bryantdigitalsolutions.com>'
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'ajbryantsleads@gmail.com'
 
 function getClient(): Resend | null {
   const apiKey = process.env.RESEND_API_KEY
@@ -34,7 +36,14 @@ export async function sendCustomerAuditEmail(params: {
   }
 
   try {
-    await client.emails.send({ from: FROM_EMAIL, to: params.to, subject, html })
+    const result = await client.emails.send({
+      from: FROM_EMAIL,
+      to: params.to,
+      replyTo: ADMIN_EMAIL,
+      subject,
+      html,
+    })
+    if (result.error) throw new Error(result.error.message)
     return { sent: true }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown email error'
@@ -62,7 +71,14 @@ export async function sendAdminNotificationEmail(params: {
   }
 
   try {
-    await client.emails.send({ from: FROM_EMAIL, to: ADMIN_EMAIL, subject, html })
+    const result = await client.emails.send({
+      from: FROM_EMAIL,
+      to: ADMIN_EMAIL,
+      replyTo: params.email,
+      subject,
+      html,
+    })
+    if (result.error) throw new Error(result.error.message)
     return { sent: true }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown email error'
