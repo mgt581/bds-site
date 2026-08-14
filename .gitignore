@@ -31,6 +31,9 @@ firebase-debug.log*
 .env*.local
 !.env.example
 .neon
+.dev.vars
+.wrangler/
+*.csv
 
 # vercel
 .vercel

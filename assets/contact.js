@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const submit = form.querySelector('button[type="submit"]');
   const status = form.querySelector('.contact-form-status');
   const auditService = 'Free Website and SEO Audit';
+  const honeypot = installBdsHoneypot(form);
 
   const setAuditMode = () => {
     const enabled = service?.value === auditService;
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
           phone: String(data.get('phone') || '').trim(),
           website: String(data.get('website') || '').trim(),
           businessName: String(data.get('company') || '').trim() || 'Website Audit Client',
+          contact_time: honeypot(),
         }
       : {
           name: String(data.get('name') || '').trim(),
@@ -46,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
           service: String(data.get('service') || '').trim(),
           message: String(data.get('message') || '').trim(),
           website: String(data.get('website') || '').trim(),
+          contact_time: honeypot(),
         };
 
     status?.classList.remove('is-error');
@@ -57,13 +60,21 @@ document.addEventListener('DOMContentLoaded', () => {
     submit?.setAttribute('disabled', '');
 
     try {
-      const response = await fetch(`${BACKEND_ORIGIN}${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error || 'Something went wrong. Please try again.');
+      await storeBdsLead(Object.assign({}, payload, {
+        service: String(data.get('service') || '').trim() || (isAudit ? auditService : 'Website enquiry'),
+        message: String(data.get('message') || '').trim() || (isAudit ? `Website audit requested for ${payload.website}` : ''),
+      }), form.getAttribute('aria-label') || 'Contact form');
+
+      let result = {};
+      if (isAudit) {
+        const response = await fetch(`${BACKEND_ORIGIN}${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Something went wrong. Please try again.');
+      }
 
       if (isAudit && result.reportId) {
         window.location.assign(`${BACKEND_ORIGIN}/audit/${encodeURIComponent(result.reportId)}`);
