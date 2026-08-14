@@ -1,16 +1,19 @@
-import { clean, ensureSchema, hashIp, insertEvent, json, normalizeLead } from '../_shared/core.js';
+import { clean, ensureSchema, hashIp, insertEvent, normalizeLead, publicJson, publicOptions } from '../_shared/core.js';
+
+export function onRequestOptions({ request }) { return publicOptions(request); }
 
 export async function onRequestPost({ request, env }) {
-  if (!env.LEADS_DB) return json({ error: 'Lead storage is not configured.' }, 503);
+  const reply = (body, status) => publicJson(request, body, status);
+  if (!env.LEADS_DB) return reply({ error: 'Lead storage is not configured.' }, 503);
   let input;
-  try { input = await request.json(); } catch (_) { return json({ error: 'Invalid JSON.' }, 400); }
+  try { input = await request.json(); } catch (_) { return reply({ error: 'Invalid JSON.' }, 400); }
   // BDS legitimately collects a customer website URL. Use a dedicated hidden
   // field as the bot trap so real website-audit leads are never discarded.
-  if (clean(input.contact_time)) return json({ ok: true });
+  if (clean(input.contact_time)) return reply({ ok: true });
 
   if (clean(input.website) && !clean(input.message)) input.message = 'Website: ' + clean(input.website, 2048);
   const lead = normalizeLead(input);
-  if ((!lead.phone && !lead.email) || !lead.name) return json({ error: 'Please provide a name and phone or email.' }, 400);
+  if ((!lead.phone && !lead.email) || !lead.name) return reply({ error: 'Please provide a name and phone or email.' }, 400);
 
   await ensureSchema(env.LEADS_DB);
   const ipHash = await hashIp(request.headers.get('cf-connecting-ip') || '');
@@ -28,7 +31,7 @@ export async function onRequestPost({ request, env }) {
       clean(request.headers.get('user-agent')),ipHash
     ).run();
   } catch (error) {
-    return json({ error: 'Your enquiry could not be stored safely.' }, 503);
+    return reply({ error: 'Your enquiry could not be stored safely.' }, 503);
   }
 
   const leadId = inserted && inserted.meta ? Number(inserted.meta.last_row_id || 0) : 0;
@@ -64,7 +67,6 @@ export async function onRequestPost({ request, env }) {
     event_name: delivered ? 'generate_lead' : 'lead_delivery_failed',
     medium: lead.utm_medium, campaign: lead.utm_campaign, term: lead.utm_term, content: lead.utm_content
   }));
-  if (!delivered) return json({ error: 'Your enquiry was stored, but online delivery failed. Please call or message us.' }, 502);
-  return json({ ok: true });
+  if (!delivered) return reply({ error: 'Your enquiry was stored, but online delivery failed. Please call or message us.' }, 502);
+  return reply({ ok: true });
 }
-

@@ -11,6 +11,43 @@ export function json(body, status = 200) {
   });
 }
 
+const PUBLIC_ORIGINS = new Set([
+  'https://bryantdigitalsolutions.com',
+  'https://www.bryantdigitalsolutions.com',
+  'https://mgt581.github.io'
+]);
+
+export function publicCorsHeaders(request) {
+  const origin = clean(request.headers.get('origin'));
+  const pagesPreview = /^https:\/\/[a-z0-9-]+\.bds-site\.pages\.dev$/i.test(origin);
+  if (!PUBLIC_ORIGINS.has(origin) && !pagesPreview) return {};
+  return {
+    'access-control-allow-origin': origin,
+    'access-control-allow-methods': 'POST, OPTIONS',
+    'access-control-allow-headers': 'content-type',
+    'access-control-max-age': '86400',
+    'vary': 'Origin'
+  };
+}
+
+export function publicJson(request, body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      'content-type': 'application/json; charset=utf-8',
+      'cache-control': 'no-store',
+      ...publicCorsHeaders(request)
+    }
+  });
+}
+
+export function publicOptions(request) {
+  const headers = publicCorsHeaders(request);
+  return Object.keys(headers).length
+    ? new Response(null, { status: 204, headers })
+    : new Response(null, { status: 403 });
+}
+
 export function text(body, status = 200, type = 'text/plain; charset=utf-8') {
   return new Response(body, { status, headers: { 'content-type': type, 'cache-control': 'no-store' } });
 }

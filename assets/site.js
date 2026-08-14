@@ -20,7 +20,7 @@ async function bdsLeadPayload(values, formName) {
 
 async function storeBdsLead(values, formName) {
   window.LeadGen?.trackEvent?.("lead_form_submit_attempt", { form_name: formName });
-  const response = await fetch("/api/lead", {
+  const response = await fetch(window.LEADGEN_CONFIG?.leadEndpoint || "/api/lead", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(await bdsLeadPayload(values, formName)),
