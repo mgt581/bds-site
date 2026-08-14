@@ -1,15 +1,114 @@
-window.LeadGenReady = window.LeadGenReady || new Promise((resolve) => {
-  const load = (src) => new Promise((done) => {
-    const script = document.createElement("script");
-    script.src = src;
-    script.onload = done;
-    script.onerror = done;
-    document.head.appendChild(script);
-  });
-  load("assets/site-config.js?v=20260814").then(() =>
-    load("assets/lead-tracking.js?v=20260814"),
-  ).then(resolve);
-});
+(function installBdsTracking() {
+  "use strict";
+
+  const config = {
+    leadEndpoint: "https://bds-site.pages.dev/api/lead",
+    eventEndpoint: "https://bds-site.pages.dev/api/lead-event",
+    storagePrefix: "bryant_digital_solutions",
+  };
+  const prefix = config.storagePrefix;
+  const clean = (value) => String(value || "").trim();
+  const get = (storage, key) => {
+    try { return storage.getItem(`${prefix}_${key}`) || ""; } catch (_) { return ""; }
+  };
+  const set = (storage, key, value) => {
+    try { storage.setItem(`${prefix}_${key}`, value); } catch (_) {}
+  };
+  const makeId = (kind) => {
+    if (window.crypto?.randomUUID) return `${kind}-${window.crypto.randomUUID()}`;
+    return `${kind}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+  };
+  const stableId = (storage, key, kind) => {
+    let value = get(storage, key);
+    if (!value) { value = makeId(kind); set(storage, key, value); }
+    return value;
+  };
+  const firstTouch = () => {
+    const stored = get(sessionStorage, "first_touch");
+    if (stored) {
+      try { return JSON.parse(stored); } catch (_) {}
+    }
+    const params = new URLSearchParams(window.location.search);
+    const attribution = {
+      referrer: document.referrer || "",
+      utm_source: params.get("utm_source") || "",
+      utm_medium: params.get("utm_medium") || "",
+      utm_campaign: params.get("utm_campaign") || "",
+      utm_term: params.get("utm_term") || "",
+      utm_content: params.get("utm_content") || "",
+      gclid: params.get("gclid") || "",
+      fbclid: params.get("fbclid") || "",
+      msclkid: params.get("msclkid") || "",
+    };
+    set(sessionStorage, "first_touch", JSON.stringify(attribution));
+    return attribution;
+  };
+  const attribution = () => {
+    let landingPage = get(sessionStorage, "landing_page");
+    if (!landingPage) {
+      landingPage = window.location.href;
+      set(sessionStorage, "landing_page", landingPage);
+    }
+    return {
+      ...firstTouch(),
+      page: window.location.href,
+      landing_page: landingPage,
+      session_id: stableId(sessionStorage, "session_id", "session"),
+      client_id: stableId(localStorage, "client_id", "client"),
+    };
+  };
+  const trackEvent = (name, detail = {}, options = {}) => {
+    const eventName = clean(name);
+    if (!eventName) return Promise.resolve();
+    const payload = { ...attribution(), ...detail, event_name: eventName };
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: eventName, ...detail });
+    if (options.store === false) return Promise.resolve();
+
+    // BDS is hosted on GitHub Pages and stores events on Cloudflare. A direct
+    // CORS fetch is reliable across the two origins; cross-origin sendBeacon
+    // can report success before a browser or privacy layer drops the request.
+    return fetch(config.eventEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true,
+      mode: "cors",
+      credentials: "omit",
+    }).catch(() => undefined);
+  };
+
+  window.LEADGEN_CONFIG = config;
+  window.LeadGen = {
+    getAttribution: attribution,
+    trackEvent,
+    trackLead: (formName) => trackEvent("generate_lead", {
+      form_name: formName || "Website form",
+      source: "website",
+    }, { store: false }),
+  };
+  window.LeadGenReady = Promise.resolve();
+
+  const start = () => {
+    trackEvent("page_view", {
+      page_title: document.title,
+      page_location: window.location.href,
+      source: "website",
+    });
+    document.addEventListener("click", (click) => {
+      const link = click.target?.closest?.("a[href]");
+      if (!link) return;
+      const raw = link.getAttribute("href") || "";
+      const detail = { link_text: clean(link.textContent), link_url: link.href };
+      if (raw.startsWith("tel:")) trackEvent("phone_click", { ...detail, phone_number: raw.slice(4) });
+      else if (raw.startsWith("mailto:")) trackEvent("email_click", { ...detail, email_address: raw.slice(7) });
+      else if (/wa\.me|whatsapp\.com/i.test(link.href)) trackEvent("whatsapp_click", detail);
+      else if (/contact|quote|enquir/i.test(`${raw} ${link.textContent}`)) trackEvent("quote_cta_click", detail);
+    });
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
+  else start();
+})();
 
 async function bdsLeadPayload(values, formName) {
   await window.LeadGenReady;
