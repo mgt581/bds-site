@@ -1,3 +1,51 @@
+window.LeadGenReady = window.LeadGenReady || new Promise((resolve) => {
+  const load = (src) => new Promise((done) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = done;
+    script.onerror = done;
+    document.head.appendChild(script);
+  });
+  load("assets/site-config.js?v=20260814").then(() =>
+    load("assets/lead-tracking.js?v=20260814"),
+  ).then(resolve);
+});
+
+async function bdsLeadPayload(values, formName) {
+  await window.LeadGenReady;
+  return Object.assign({}, values, window.LeadGen?.getAttribution?.() || {}, {
+    form_name: formName,
+  });
+}
+
+async function storeBdsLead(values, formName) {
+  window.LeadGen?.trackEvent?.("lead_form_submit_attempt", { form_name: formName });
+  const response = await fetch(window.LEADGEN_CONFIG?.leadEndpoint || "/api/lead", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(await bdsLeadPayload(values, formName)),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    window.LeadGen?.trackEvent?.("lead_form_error", { form_name: formName });
+    throw new Error(data.error || "Your enquiry could not be saved. Please call 07843 969254.");
+  }
+  window.LeadGen?.trackLead?.(formName);
+  return data;
+}
+
+function installBdsHoneypot(form) {
+  const trap = document.createElement("input");
+  trap.type = "text";
+  trap.name = "contact_time";
+  trap.tabIndex = -1;
+  trap.autocomplete = "off";
+  trap.setAttribute("aria-hidden", "true");
+  trap.style.cssText = "position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden";
+  form.appendChild(trap);
+  return () => trap.value;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const navToggle = document.querySelector(".nav-toggle");
   const siteNav = document.querySelector(".site-nav");
@@ -144,6 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.querySelectorAll(".js-audit-form").forEach((form) => {
+    const honeypot = installBdsHoneypot(form);
     const status = form.querySelector(".audit-tool-status");
     const submit = form.querySelector(".audit-submit");
 
@@ -171,6 +220,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
+        await storeBdsLead(Object.assign({}, payload, {
+          service: "Free Website and SEO Audit",
+          message: "Website audit requested for " + payload.website,
+          contact_time: honeypot(),
+        }), form.getAttribute("aria-label") || "Free SEO audit form");
         const response = await fetch(`${backendOrigin}/api/audit`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -217,6 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.querySelectorAll('form.form-grid[aria-label="Homepage contact form"]').forEach((form) => {
+    const honeypot = installBdsHoneypot(form);
     const service = form.querySelector('select[name="service"]');
     const company = form.querySelector('input[name="company"]');
     const name = form.querySelector('input[name="name"]');
@@ -250,12 +305,16 @@ document.addEventListener("DOMContentLoaded", () => {
         name: name.value.trim(), email: email.value.trim(), phone: phone?.value.trim() || "",
         company: company?.value.trim() || "", service: service.value,
         message: message.value.trim(), website: website?.value.trim() || "",
+        contact_time: honeypot(),
       };
       const isAudit = values.service === FREE_AUDIT_SERVICE;
       submit?.setAttribute("disabled", "");
       setContactStatus(form, isAudit ? "Running your website audit. This may take up to a minute..." : "Sending your enquiry...");
       try {
         if (isAudit) {
+          await storeBdsLead(Object.assign({}, values, {
+            message: values.message || "Website audit requested for " + values.website,
+          }), "Homepage contact form");
           const auditResponse = await fetch(`${backendOrigin}/api/audit`, {
             method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -271,11 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
           window.location.href = `${backendOrigin}/audit/${auditData.reportId}`;
           return;
         }
-        const response = await fetch(`${backendOrigin}/api/contact`, {
-          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(values),
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Unable to send your enquiry.");
+        await storeBdsLead(values, "Homepage contact form");
         form.reset();
         syncAuditField();
         setContactStatus(form, "Thanks — your enquiry has been sent. Alex will be in touch shortly.");
