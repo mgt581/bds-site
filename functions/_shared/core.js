@@ -14,6 +14,8 @@ export function json(body, status = 200) {
 const PUBLIC_ORIGINS = new Set([
   'https://bryantdigitalsolutions.com',
   'https://www.bryantdigitalsolutions.com',
+  'https://bryantdigitalsolutions.co.uk',
+  'https://www.bryantdigitalsolutions.co.uk',
   'https://mgt581.github.io'
 ]);
 
