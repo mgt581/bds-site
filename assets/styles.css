@@ -2451,3 +2451,9 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+
+.gallery-note {
+  margin: -0.3rem 0 0.8rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
