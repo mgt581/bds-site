@@ -2036,3 +2036,24 @@ textarea {
 .contact-form-status.is-error {
   color: #b42318;
 }
+
+/* Homepage intro: primary + secondary call to action */
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.hero-cta.cta-outline {
+  background: transparent;
+  color: var(--ink-2);
+  border-color: var(--gold-deep);
+}
+
+@media (max-width: 560px) {
+  .cta-row .hero-cta {
+    width: 100%;
+    text-align: center;
+  }
+}
