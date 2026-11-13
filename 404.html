@@ -3,18 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bryant Digital Solutions</title>
-    <meta name="description" content="Loading Bryant Digital Solutions pages." />
-    <script>
-      const path = window.location.pathname;
-      const repoBaseMatch = path.match(/^(.*\/bds-site)(?:\/.*)?$/);
-      const repoBase = repoBaseMatch ? repoBaseMatch[1] : "";
-      const relativePath = repoBase ? path.slice(repoBase.length) : path;
-      window.location.replace(`${repoBase}/docs${relativePath}${window.location.search}${window.location.hash}`);
-    </script>
+    <title>Page Not Found | Bryant Digital Solutions</title>
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="/assets/styles.css?v=20260716b" />
+    <style>
+      .nf { max-width: 640px; margin: 0 auto; padding: 96px 16px; text-align: center; font-family: Manrope, system-ui, sans-serif; }
+      .nf h1 { font-size: 2rem; margin-bottom: 12px; }
+      .nf p { margin-bottom: 24px; }
+      .nf nav { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+      .nf a { padding: 10px 18px; border-radius: 8px; border: 1px solid currentColor; text-decoration: none; }
+    </style>
   </head>
   <body>
-    <h1>Bryant Digital Solutions</h1>
-    <p>Loading <a href="docs/index.html">Bryant Digital Solutions</a>...</p>
+    <main class="nf">
+      <img src="/assets/logo-bds.jpg" alt="Bryant Digital Solutions logo" width="168" height="56" />
+      <h1>Sorry, that page doesn't exist</h1>
+      <p>It may have moved. Try one of these instead, or call us on <a href="tel:+447843969254" style="border:0;padding:0">07843 969254</a>.</p>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/allourservices.html">Our Services</a>
+        <a href="/audit.html">Free Website Audit</a>
+        <a href="/contactus.html">Contact Us</a>
+      </nav>
+    </main>
   </body>
 </html>

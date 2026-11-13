@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /docs/
 
-Sitemap: https://bryantdigitalsolutions.com/sitemap.xml
+Sitemap: https://bryantdigitalsolutions.co.uk/sitemap.xml
