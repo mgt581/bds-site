@@ -2090,3 +2090,125 @@ textarea {
   font-size: 0.92rem;
   color: var(--ink);
 }
+
+/* Lead process steps */
+.process-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.process-steps li {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.process-steps h3 {
+  margin: 0.6rem 0 0;
+  font-size: 1.2rem;
+}
+
+.process-steps p {
+  margin: 0.62rem 0 0;
+}
+
+.step-num {
+  display: inline-grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #b99a5f 0%, #d2b378 100%);
+  color: #0f2238;
+  font-weight: 800;
+}
+
+/* Hand-coded vs builders comparison */
+.compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.compare-table tbody tr:last-child th,
+.compare-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.compare-table thead th {
+  color: var(--ink-2);
+  font-size: 1rem;
+}
+
+.compare-table thead th:nth-child(2),
+.compare-table tbody td:nth-of-type(1) {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.compare-table tbody th {
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .process-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .process-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-table thead {
+    display: none;
+  }
+
+  .compare-table,
+  .compare-table tbody,
+  .compare-table tr,
+  .compare-table th,
+  .compare-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .compare-table tbody th {
+    padding-bottom: 0.2rem;
+    border-bottom: 0;
+    white-space: normal;
+  }
+
+  .compare-table td {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 0;
+  }
+
+  .compare-table td::before {
+    content: attr(data-label) ": ";
+    font-weight: 800;
+  }
+
+  .compare-table tbody tr {
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--surface-border);
+  }
+}
