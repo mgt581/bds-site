@@ -2057,3 +2057,36 @@ textarea {
     text-align: center;
   }
 }
+
+/* Homepage results + pricing (reuse .trust cards) */
+.section-lead {
+  margin: -0.4rem 0 1.2rem;
+  max-width: 62ch;
+}
+
+.results-highlight .stat {
+  margin: 0 0 0.3rem;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.pricing-highlight .price {
+  margin: 0.4rem 0 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.pricing-highlight .price span {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pricing-footnote {
+  margin: 1rem 0;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
