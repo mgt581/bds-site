@@ -2457,3 +2457,87 @@ textarea {
   color: var(--ink);
   font-size: 0.95rem;
 }
+
+/* Ads landing page */
+.lp-header {
+  justify-content: space-between;
+}
+
+.lp-call {
+  white-space: nowrap;
+}
+
+.lp-hero {
+  padding-top: clamp(1.4rem, 4vw, 2.6rem);
+}
+
+.lp-kicker {
+  margin: 0 0 0.4rem;
+  color: var(--gold) !important;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+
+.lp-ticks {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  color: var(--ink-2);
+}
+
+.lp-ticks li::before {
+  content: "✓ ";
+  color: var(--gold);
+  font-weight: 800;
+}
+
+.lp .reach-stats .stat + span {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.lp-quotes blockquote {
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.lp-quotes blockquote p {
+  margin: 0;
+}
+
+.lp-quotes blockquote footer {
+  margin-top: 0.6rem;
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.lp-price {
+  margin: 0.4rem 0 0 !important;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.lp-small {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.lp-small a {
+  color: var(--gold);
+}
+
+@media (max-width: 560px) {
+  .lp-call {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+  }
+}
