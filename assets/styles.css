@@ -2312,3 +2312,35 @@ textarea {
     overflow-wrap: normal;
   }
 }
+
+/* Company details in footer */
+.footer-legal {
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.footer-legal a {
+  color: inherit;
+}
+
+/* Legal pages (terms, privacy) */
+.legal-page ul {
+  padding-left: 1.2rem;
+}
+
+.legal-page li {
+  margin-bottom: 0.4rem;
+}
+
+.legal-page a {
+  color: var(--gold);
+}
+
+.legal-page .optout-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}

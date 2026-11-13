@@ -57,9 +57,19 @@
       client_id: stableId(localStorage, "client_id", "client"),
     };
   };
+  // Visitors can opt out of analytics (privacy page button) or send a
+  // Global Privacy Control signal; enquiry forms still work either way.
+  const isOptedOut = () =>
+    get(localStorage, "analytics_optout") === "1" || navigator.globalPrivacyControl === true;
+  const setOptOut = (optOut) => {
+    try {
+      if (optOut) localStorage.setItem(`${prefix}_analytics_optout`, "1");
+      else localStorage.removeItem(`${prefix}_analytics_optout`);
+    } catch (_) {}
+  };
   const trackEvent = (name, detail = {}, options = {}) => {
     const eventName = clean(name);
-    if (!eventName) return Promise.resolve();
+    if (!eventName || isOptedOut()) return Promise.resolve();
     const payload = { ...attribution(), ...detail, event_name: eventName };
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: eventName, ...detail });
@@ -80,6 +90,8 @@
 
   window.LEADGEN_CONFIG = config;
   window.LeadGen = {
+    isOptedOut,
+    setOptOut,
     getAttribution: attribution,
     trackEvent,
     trackLead: (formName) => trackEvent("generate_lead", {
